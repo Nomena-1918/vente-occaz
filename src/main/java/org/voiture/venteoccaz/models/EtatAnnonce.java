@@ -34,4 +34,10 @@ public class EtatAnnonce {
 
     @Column(name = "dateheureetat")
     LocalDateTime dateHeureEtat;
+
+    @ManyToOne
+    @JoinColumn(name = "idutilisateur", nullable = false)
+    @JsonIgnore
+    Utilisateur utilisateur;
+    
 }
