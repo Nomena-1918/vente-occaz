@@ -3,6 +3,7 @@ package org.voiture.venteoccaz.models;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Annonce {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idannonce")
     Integer idAnnonce;
 
     @ManyToOne
@@ -50,12 +52,14 @@ public class Annonce {
     List<Photo> listePhotos;
     
     double prix;
+    @Column(name = "pourcentagecommission")
     double pourcentageCommission;
     String description;
 
     @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
     List<EtatAnnonce> etats;
 
+    @Column(name = "etatannonce")
     int etatAnnonce;
     
 }
