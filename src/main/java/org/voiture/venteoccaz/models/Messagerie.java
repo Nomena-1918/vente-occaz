@@ -13,7 +13,7 @@ public class Messagerie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idMessagerie;
+    Integer idMessagerie;
     Utilisateur envoyeur;
     Utilisateur recepteur;
     List<Message> echanges;

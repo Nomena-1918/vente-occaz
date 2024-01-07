@@ -14,7 +14,7 @@ public class Marque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idMarque;
+    Integer idMarque;
     String nomMarque;
     
 }

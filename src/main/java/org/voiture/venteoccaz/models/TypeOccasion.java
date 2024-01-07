@@ -14,7 +14,7 @@ public class TypeOccasion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idTypeOccasion;
+    Integer idTypeOccasion;
     String nomTypeOccasion;
     
 }

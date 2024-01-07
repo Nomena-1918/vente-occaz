@@ -14,7 +14,7 @@ public class Couleur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idCouleur;
+    Integer idCouleur;
     String nomCouleur;
     
 }

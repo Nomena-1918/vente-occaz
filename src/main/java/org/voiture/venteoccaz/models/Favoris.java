@@ -20,7 +20,7 @@ public class Favoris {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idFavoris;
+    Integer idFavoris;
 
     @ManyToOne
     @JoinColumn(name = "idutilisateur", nullable = false)
