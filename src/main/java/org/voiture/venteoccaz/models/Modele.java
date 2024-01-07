@@ -1,5 +1,6 @@
 package org.voiture.venteoccaz.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,9 @@ public class Modele {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idModele;
+    @Column(name = "idmodele")
+    Integer idModele;
+    @Column(name = "nommodele")
     String nomModele;
     
 }

@@ -2,7 +2,10 @@ package org.voiture.venteoccaz.models;
 
 import java.util.List;
 
+// import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +23,8 @@ public class Annonce {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idAnnonce;
+    @Column(name = "idannonce")
+    Integer idAnnonce;
 
     @ManyToOne
     @JoinColumn(name = "idutilisateur", nullable = false)
@@ -47,15 +51,18 @@ public class Annonce {
     Marque marque;
 
     @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
+    // @JsonIgnore
     List<Photo> listePhotos;
     
     double prix;
+    @Column(name = "pourcentagecommission")
     double pourcentageCommission;
     String description;
 
     @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
     List<EtatAnnonce> etats;
 
+    @Column(name = "etatannonce")
     int etatAnnonce;
     
 }

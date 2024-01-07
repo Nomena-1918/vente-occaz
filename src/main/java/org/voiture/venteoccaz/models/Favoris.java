@@ -2,6 +2,7 @@ package org.voiture.venteoccaz.models;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class Favoris {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idFavoris;
+    @Column(name = "idfavoris")
+    Integer idFavoris;
 
     @ManyToOne
     @JoinColumn(name = "idutilisateur", nullable = false)

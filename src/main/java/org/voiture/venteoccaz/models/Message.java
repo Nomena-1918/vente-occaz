@@ -12,7 +12,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idMessage;
+    Integer idMessage;
     Utilisateur envoyeur;
     Utilisateur recepteur;
     String texte;
