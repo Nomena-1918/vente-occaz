@@ -17,6 +17,7 @@ public class Marque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idmarque")
     Integer idMarque;
+    @Column(name = "nommarque")
     String nomMarque;
     
 }

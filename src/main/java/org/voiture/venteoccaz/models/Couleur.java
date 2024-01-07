@@ -17,6 +17,7 @@ public class Couleur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idcouleur")
     Integer idCouleur;
+    @Column(name = "nomcouleur")
     String nomCouleur;
     
 }
