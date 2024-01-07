@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.models.Annonce;
 import org.voiture.venteoccaz.services.AnnonceService;
 
@@ -19,9 +20,13 @@ public class AnnonceController {
     private AnnonceService annonceService;
 
     @GetMapping("/non-validees")
-    public ResponseEntity<List<Annonce>> getNonValidatedAnnonces() {
-        List<Annonce> nonValidatedAnnonces = annonceService.getUnvalidatedAnnonces();
-        return ResponseEntity.ok(nonValidatedAnnonces);
+    public ResponseEntity<Reponse> getNonValidatedAnnonces() {
+        try {
+            List<Annonce> nonValidatedAnnonces = annonceService.getUnvalidatedAnnonces();
+            return ResponseEntity.ok(new Reponse(nonValidatedAnnonces));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", "Une erreur est survenue lors de la recuperation de la liste"));
+        }
     }
 }
 
