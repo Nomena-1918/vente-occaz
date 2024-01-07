@@ -2,6 +2,8 @@ package org.voiture.venteoccaz.models;
 
 import java.util.List;
 
+// import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,6 +51,7 @@ public class Annonce {
     Marque marque;
 
     @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
+    // @JsonIgnore
     List<Photo> listePhotos;
     
     double prix;

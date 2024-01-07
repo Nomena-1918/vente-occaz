@@ -18,7 +18,9 @@ public class Utilisateur {
     @Column(name = "idutilisateur")
     Integer idUtilisateur;
     String email;
+    @Column(name = "motdepasse")
     String motDePasse;
+    @Column(name = "isadmin")
     int isAdmin;
     
 }

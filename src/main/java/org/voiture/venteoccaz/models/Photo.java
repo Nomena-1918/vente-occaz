@@ -1,5 +1,7 @@
 package org.voiture.venteoccaz.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ public class Photo {
 
     @ManyToOne
     @JoinColumn(name = "idannonce", nullable = false)
+    @JsonIgnore
     Annonce annonce;
 
     String repertoire;

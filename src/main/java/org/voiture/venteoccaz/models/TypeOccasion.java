@@ -17,6 +17,7 @@ public class TypeOccasion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idtypeoccasion")
     Integer idTypeOccasion;
+    @Column(name = "nomtypeoccasion")
     String nomTypeOccasion;
     
 }
