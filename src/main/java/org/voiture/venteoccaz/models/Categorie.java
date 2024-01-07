@@ -14,7 +14,7 @@ public class Categorie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idCategorie;
+    Integer idCategorie;
     String nomCategorie;
     
 }

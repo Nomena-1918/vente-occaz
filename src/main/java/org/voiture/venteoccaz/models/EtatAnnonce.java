@@ -6,8 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// import jakarta.persistence.JoinColumn;
-// import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -18,10 +18,10 @@ public class EtatAnnonce {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idEtatAnnonce;
+    Integer idEtatAnnonce;
 
-    // @ManyToOne
-    // @JoinColumn(name = "idannonce", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "idannonce", nullable = false)
     Annonce annonce;
 
     int typeEtat;

@@ -20,7 +20,7 @@ public class Annonce {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idAnnonce;
+    Integer idAnnonce;
 
     @ManyToOne
     @JoinColumn(name = "idutilisateur", nullable = false)
