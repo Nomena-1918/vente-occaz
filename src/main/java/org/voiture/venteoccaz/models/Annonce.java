@@ -1,8 +1,7 @@
 package org.voiture.venteoccaz.models;
 
 import java.util.List;
-
-// import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -23,7 +23,7 @@ public class Annonce {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idannonce")
+    @Column(name = "idannonce") 
     Integer idAnnonce;
 
     @ManyToOne
@@ -64,5 +64,11 @@ public class Annonce {
 
     @Column(name = "etatannonce")
     int etatAnnonce;
+
+    @Column(name = "dateheurecreation")
+    LocalDateTime dateHeureCreation;
+
+    @Transient
+    boolean favoris = false;
     
 }
