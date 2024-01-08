@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.voiture.venteoccaz.Repositories.AnnonceRepository;
 import org.voiture.venteoccaz.Repositories.CategorieRepository;
 import org.voiture.venteoccaz.Repositories.CouleurRepository;
@@ -21,7 +20,6 @@ import org.voiture.venteoccaz.models.Annonce;
 import org.voiture.venteoccaz.models.EtatAnnonce;
 import org.voiture.venteoccaz.models.Favoris;
 import org.voiture.venteoccaz.models.Photo;
-import org.voiture.venteoccaz.models.TypeOccasion;
 
 @Service
 public class AnnonceService {
@@ -47,6 +45,19 @@ public class AnnonceService {
         this.marqueRepository = marqueRepository;
         this.modeleRepository = modeleRepository;
         this.typeOccasionRepository = typeOccasionRepository;
+    }
+
+    public void setAnnonceVendue(Integer idUtilisateur, Integer idAnnonce, LocalDateTime dateHeureVente) {
+        if(dateHeureVente == null) dateHeureVente = LocalDateTime.now();
+
+        // Insertion dans EtatAnnonce
+        EtatAnnonce etatAnnonce = new EtatAnnonce();
+        etatAnnonce.setAnnonce(annonceRepository.findById(idAnnonce).orElse(null));
+        etatAnnonce.setTypeEtat(100);
+        etatAnnonce.setUtilisateur(utilisateurRepository.findById(idUtilisateur).orElse(null));
+        etatAnnonce.setDateHeureEtat(dateHeureVente);
+
+        etatAnnonceRepository.save(etatAnnonce);
     }
 
     public void creerAnnonce(Integer idUtilisateur, Integer idMarque,Integer idModele, Integer idCategorie,Integer idTypeOccasion,Integer idCouleur,double prix, String [] listePhotos, String description) {

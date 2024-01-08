@@ -1,8 +1,6 @@
 package org.voiture.venteoccaz.controllers;
 
 import java.util.List;
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 // import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.models.Annonce;
 import org.voiture.venteoccaz.services.AnnonceService;
@@ -24,7 +21,17 @@ public class AnnonceController {
     @Autowired
     private AnnonceService annonceService;
 
-    @PostMapping("creerAnnonce")
+    @PostMapping("/setAnnonceVendue")
+    public ResponseEntity<Reponse> setAnnonceVendue(@RequestParam Integer idUtilisateur,@RequestParam Integer idAnnonce) {
+        try {
+            annonceService.setAnnonceVendue(idUtilisateur, idAnnonce, null);
+            return ResponseEntity.ok(new Reponse(""));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/creerAnnonce")
     public ResponseEntity<Reponse> creerAnnonce(@RequestParam Integer idUtilisateur, @RequestParam Integer idMarque,@RequestParam Integer idModele, @RequestParam Integer idCategorie,@RequestParam Integer idTypeOccasion,@RequestParam Integer idCouleur,@RequestParam double prix, @RequestParam("photo1") String photo1,@RequestParam("photo2") String photo2, @RequestParam("photo3") String photo3, @RequestParam("photo4") String photo4, @RequestParam String description) {
         try {
             String [] listePhotos = {photo1, photo2, photo3, photo4};
