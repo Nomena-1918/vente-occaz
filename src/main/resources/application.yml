@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/
+    url: jdbc:postgresql://localhost:5432/voiture
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -13,3 +13,10 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# BEARER TOKEN
+custom:
+  token:
+    #(in minutes)
+    duration: 120
+    key: JbjaF2@tV$
