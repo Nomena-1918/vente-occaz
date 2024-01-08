@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/voiture
+    url: jdbc:postgresql://postgres:ag2CBEegb6fBe1GdgAd6cbbDdF5cgac1@viaduct.proxy.rlwy.net:55313/railway
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
