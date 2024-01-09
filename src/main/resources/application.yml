@@ -17,6 +17,4 @@ spring:
 # BEARER TOKEN
 custom:
   token:
-    #(in minutes)
-    duration: 120
     key: JbjaF2@tV$
