@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/annonces")
+@RequestMapping("api/v1")
 public class AuthController {
     private final AuthService authService;
     @Autowired
