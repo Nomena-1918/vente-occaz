@@ -1,4 +1,12 @@
 spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: admin
+      username: nomena
+      password: root
+
   datasource:
     url: jdbc:postgresql://localhost:5432/voiture
     username: postgres
