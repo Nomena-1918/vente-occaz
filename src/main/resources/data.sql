@@ -4,6 +4,8 @@ INSERT INTO utilisateurs (email, motdepasse, isadmin) VALUES
 ('u2@gmail.com', '1234', 0),
 ('u3@gmail.com', '1234', 0);
 
+
+
 -- Insertion de donnees dans les tables de reference
 INSERT INTO typeoccasions (nomTypeOccasion) VALUES
 ('Occasion Standard'),
