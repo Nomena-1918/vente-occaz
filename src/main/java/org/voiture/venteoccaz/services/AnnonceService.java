@@ -60,6 +60,11 @@ public class AnnonceService {
         etatAnnonceRepository.save(etatAnnonce);
     }
 
+    // historique
+    public List<Annonce> getAllAnnonceByIdUtilisateur(Integer idUtilisateur) {
+        return getAnnonceWithFavoris(annonceRepository.getAllAnnonceByIdUtilisateur(idUtilisateur));
+    }
+
     public void creerAnnonce(Integer idUtilisateur, Integer idMarque,Integer idModele, Integer idCategorie,Integer idTypeOccasion,Integer idCouleur,double prix, String [] listePhotos, String description) {
         Annonce annonce = new Annonce();
         annonce.setProprietaire(utilisateurRepository.findById(idUtilisateur).orElse(null));
