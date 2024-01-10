@@ -47,6 +47,12 @@ public class AnnonceService {
         this.typeOccasionRepository = typeOccasionRepository;
     }
 
+    // favoris
+    public List<Annonce> getAllAnnonceFavoris(Integer idUtilisateur) {
+        return getAnnonceWithFavoris(annonceRepository.getAllAnnonceFavoris(idUtilisateur));
+    }
+
+    // vente
     public void setAnnonceVendue(Integer idUtilisateur, Integer idAnnonce, LocalDateTime dateHeureVente) {
         if(dateHeureVente == null) dateHeureVente = LocalDateTime.now();
 

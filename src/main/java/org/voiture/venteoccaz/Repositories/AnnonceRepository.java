@@ -12,6 +12,9 @@ import org.voiture.venteoccaz.models.Annonce;
 @Repository
 public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
 
+        @Query("SELECT a, true FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur ORDER BY e.dateHeureEtat DESC")
+        List<Object[]> getAllAnnonceFavoris(@Param("idUtilisateur") Integer idUtilisateur);
+
         @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE a.proprietaire.idUtilisateur = :idUtilisateur ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAllAnnonceByIdUtilisateur(@Param("idUtilisateur") Integer idUtilisateur);
 

@@ -21,6 +21,16 @@ public class AnnonceController {
     @Autowired
     private AnnonceService annonceService;
 
+    @GetMapping("/favoris/{idUtilisateur}")
+    public ResponseEntity<Reponse> getFavoris(@PathVariable Integer idUtilisateur) {
+        try {
+            List<Annonce> favoris = annonceService.getAllAnnonceFavoris(idUtilisateur);
+            return ResponseEntity.ok(new Reponse(favoris));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
     @GetMapping("/historique-annonce/{idUtilisateur}")
     public ResponseEntity<Reponse> getHistoriqueAnnonce(@PathVariable Integer idUtilisateur) {
         try {
