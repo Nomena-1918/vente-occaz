@@ -13,3 +13,8 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# BEARER TOKEN
+custom:
+  token:
+    key: JbjaF2@tV$

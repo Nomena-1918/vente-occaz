@@ -23,7 +23,6 @@ import jakarta.persistence.Query;
 
 @Service
 public class AdminService {
-
     private final AnnonceRepository annonceRepository;
     private final EtatAnnonceRepository etatAnnonceRepository;
     private final UtilisateurRepository utilisateurRepository;

@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Data
@@ -34,5 +35,7 @@ public class Session {
     Integer isConnected;
     
     String token;
+
+
     
 }
