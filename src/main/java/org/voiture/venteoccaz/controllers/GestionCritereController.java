@@ -1,7 +1,6 @@
 package org.voiture.venteoccaz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.voiture.venteoccaz.Reponse.Reponse;
@@ -9,9 +8,9 @@ import org.voiture.venteoccaz.Repositories.*;
 import org.voiture.venteoccaz.models.*;
 import org.voiture.venteoccaz.services.AuthService;
 
-import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1")
 public class GestionCritereController {
