@@ -47,6 +47,12 @@ public class AnnonceService {
         this.typeOccasionRepository = typeOccasionRepository;
     }
 
+    // favoris
+    public List<Annonce> getAllAnnonceFavoris(Integer idUtilisateur) {
+        return getAnnonceWithFavoris(annonceRepository.getAllAnnonceFavoris(idUtilisateur));
+    }
+
+    // vente
     public void setAnnonceVendue(Integer idUtilisateur, Integer idAnnonce, LocalDateTime dateHeureVente) {
         if(dateHeureVente == null) dateHeureVente = LocalDateTime.now();
 
@@ -58,6 +64,11 @@ public class AnnonceService {
         etatAnnonce.setDateHeureEtat(dateHeureVente);
 
         etatAnnonceRepository.save(etatAnnonce);
+    }
+
+    // historique
+    public List<Annonce> getAllAnnonceByIdUtilisateur(Integer idUtilisateur) {
+        return getAnnonceWithFavoris(annonceRepository.getAllAnnonceByIdUtilisateur(idUtilisateur));
     }
 
     public void creerAnnonce(Integer idUtilisateur, Integer idMarque,Integer idModele, Integer idCategorie,Integer idTypeOccasion,Integer idCouleur,double prix, String [] listePhotos, String description) {
