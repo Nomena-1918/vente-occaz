@@ -46,20 +46,19 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> Logout(@RequestHeader Map<String,String> headers) {
+    public ResponseEntity<Reponse> Logout(@RequestHeader Map<String,String> headers) {
         try {
             if (authService.validateAuthorization(headers)) {
                 String token = headers.get("authorization");
                 token = token.replace("Bearer ", "");
                 authService.expireToken(token);
-                return new ResponseEntity<>("Logged out !", HttpStatus.OK);
+                return new ResponseEntity<>(new Reponse("200", "Logged out !", null), HttpStatus.OK);
             } else
-                return new ResponseEntity<>("Token expiré", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(new Reponse("403", "Non aunthentifié !", null), HttpStatus.FORBIDDEN);
         }
         catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Reponse("500", "Erreur serveur", e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
-
 
 }

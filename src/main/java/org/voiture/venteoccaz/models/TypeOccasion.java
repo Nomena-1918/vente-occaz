@@ -17,7 +17,7 @@ public class TypeOccasion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idtypeoccasion")
     Integer idTypeOccasion;
-    @Column(name = "nomtypeoccasion")
+    @Column(name = "nomtypeoccasion", nullable = false)
     String nomTypeOccasion;
     
 }

@@ -2,6 +2,8 @@ package org.voiture.venteoccaz.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.Repositories.SessionRepository;
@@ -69,20 +71,15 @@ public class AuthService {
             return new Reponse("403", "Utilisateur absent de la base de donnée");
         }
         Optional<Session> session = getSessionFromUtilisateur(utilisateur.get());
-        Session s;
-        if (session.isPresent()) {
-            s = setSessionActif(session.get(), utilisateur.get());
-        }
-        else {
-            s = new Session();
-            s.setUtilisateur(utilisateur.get());
-            s = sessionRepository.save(setSessionActif(s, utilisateur.get()));
-        }
+
+        Session s = session.orElseGet(Session::new);
+        s = sessionRepository.save(setSessionActif(s, utilisateur.get()));
 
         return new Reponse("200", "Session de l'utilisateur", s);
     }
 
     private Session setSessionActif(Session s, Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+        s.setUtilisateur(utilisateur);
         s.setIsConnected(1);
         s.setDateHeureLogin(LocalDateTime.now());
         s.setToken(TokenGenerator.getToken(utilisateur.getEmail()));
@@ -94,6 +91,18 @@ public class AuthService {
         s.setCode(code);
         
         return s;
+    }
+
+    public ResponseEntity<Reponse> secure(Map<String,String> headers, Object o) {
+        try {
+            if (validateAuthorization(headers)) {
+                return new ResponseEntity<>(new Reponse("200", o.getClass().getSimpleName()+" reçu", o), HttpStatus.OK);
+            } else
+                return new ResponseEntity<>(new Reponse("403", "Permission refusée", null), HttpStatus.UNAUTHORIZED);
+        }
+        catch (RuntimeException e) {
+            return new ResponseEntity<>(new Reponse("500", "Erreur serveur", e.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
 
 }
