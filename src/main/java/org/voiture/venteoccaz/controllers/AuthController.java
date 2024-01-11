@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1")
 public class AuthController {
@@ -31,6 +32,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Reponse> Login(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+        System.out.println("utilisateur.getEmail() "+utilisateur.getEmail());
+        System.out.println("utilisateur.getMotDePasse() "+utilisateur.getMotDePasse());
         Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
         return getReponseResponseEntity(user);
     }

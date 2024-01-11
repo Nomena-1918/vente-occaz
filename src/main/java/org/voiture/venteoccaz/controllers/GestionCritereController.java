@@ -12,6 +12,7 @@ import org.voiture.venteoccaz.services.AuthService;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1")
 public class GestionCritereController {
