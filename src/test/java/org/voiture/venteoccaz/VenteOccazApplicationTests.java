@@ -14,6 +14,7 @@ import org.voiture.venteoccaz.services.messagerie.MessagerieService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class VenteOccazApplicationTests {
@@ -70,7 +71,44 @@ class VenteOccazApplicationTests {
 
         var list = messagerieService.getContacts(utilisateur1);
         System.out.println("=========\n"+list+"\n=========");
+
     }
+
+
+    @Test
+    void getEchanges() {
+        int id = 2;
+        MongoUtilisateur utilisateur1 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            utilisateur1  = new MongoUtilisateur(utilisateurRepository.findById(id).get());
+
+        var list = messagerieService.getContacts(utilisateur1);
+        var messagerie = messagerieService.getEchanges(utilisateur1, list.get(0));
+
+        System.out.println("=============\n"+messagerie+"\n=============");
+    }
+
+    @Test
+    void envoyerMessage() throws Exception {
+        int id = 2;
+        MongoUtilisateur utilisateur1 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            utilisateur1  = new MongoUtilisateur(utilisateurRepository.findById(id).get());
+
+        List<MongoUtilisateur> contacts = messagerieService.getContacts(utilisateur1);
+        Optional<List<Messagerie>> messagerie = messagerieService.getEchanges(utilisateur1, contacts.get(0));
+
+        System.out.println("=============\n"+messagerie+"\n=============");
+
+        Message message = new Message(utilisateur1, contacts.get(0), "Dernier message de test, je veux m'assurer que ca marche 🔥", LocalDateTime.now());
+        if(messagerie.isPresent())
+
+
+        System.out.println("=============\n"+messagerie+"\n=============");
+    }
+
+
+
 
     @Test
     void selectMessagerie() {

@@ -7,11 +7,16 @@ import org.voiture.venteoccaz.models.mongodb.Messagerie;
 import org.voiture.venteoccaz.models.mongodb.MongoUtilisateur;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface MessagerieRepository extends MongoRepository<Messagerie, Long> {
     @Query(value = "{ '$or': [{'envoyeur': ?0}, {'recepteur': ?0}]}",
             fields = "{ 'recepteur': { '$cond': { 'if': { '$eq': ['$envoyeur', ?0] }, 'then': '$recepteur', 'else': '$envoyeur' } } }")
-    List<RecepteurOnly> findAllByMongoUtilisateur(MongoUtilisateur mongoUtilisateur);
+    Optional<List<RecepteurOnly>> findAllByMongoUtilisateur(MongoUtilisateur mongoUtilisateur);
+
+    @Query("{ '$or': [{'envoyeur': ?0, 'recepteur': ?1},  {'envoyeur': ?1, 'recepteur': ?0}]}")
+    Optional<List<Messagerie>> findAllByMongoUtilisateurEchange(MongoUtilisateur mongoUtilisateurEnvoyeur, MongoUtilisateur mongoUtilisateurReceveur);
+
 }
