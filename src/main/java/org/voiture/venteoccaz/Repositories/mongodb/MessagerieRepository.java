@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface MessagerieRepository extends MongoRepository<Messagerie, Long> {
-    @Query("{ '$or': [{'envoyeur': ?0}, {'recepteur': ?0}]}")
+    @Query(value = "{ '$or': [{'envoyeur': ?0}, {'recepteur': ?0}]}",
+            fields = "{ 'recepteur': { '$cond': { 'if': { '$eq': ['$envoyeur', ?0] }, 'then': '$recepteur', 'else': '$envoyeur' } } }")
     List<RecepteurOnly> findAllByMongoUtilisateur(MongoUtilisateur mongoUtilisateur);
 }
