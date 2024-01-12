@@ -1,5 +1,6 @@
 package org.voiture.venteoccaz.Repositories.mongodb;
 
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ public interface MessagerieRepository extends MongoRepository<Messagerie, Long> 
     Optional<List<RecepteurOnly>> findAllByMongoUtilisateur(MongoUtilisateur mongoUtilisateur);
 
     @Query("{ '$or': [{'envoyeur': ?0, 'recepteur': ?1},  {'envoyeur': ?1, 'recepteur': ?0}]}")
-    Optional<List<Messagerie>> findAllByMongoUtilisateurEchange(MongoUtilisateur mongoUtilisateurEnvoyeur, MongoUtilisateur mongoUtilisateurReceveur);
+    @Aggregation("{'$group': {'_id': '$_id'}}")
+    Optional<Messagerie> findAllByMongoUtilisateurEchange(MongoUtilisateur mongoUtilisateurEnvoyeur, MongoUtilisateur mongoUtilisateurReceveur);
 
 }

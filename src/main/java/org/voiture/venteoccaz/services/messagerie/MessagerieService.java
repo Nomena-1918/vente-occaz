@@ -38,7 +38,7 @@ public class MessagerieService {
 
 
     // Prendre tous les échanges d'un utilisateur avec un autre utilisateur
-    public Optional<List<Messagerie>> getEchanges(MongoUtilisateur mongoUtilisateurEnvoyeur, MongoUtilisateur mongoUtilisateurReceveur) {
+    public Optional<Messagerie> getEchanges(MongoUtilisateur mongoUtilisateurEnvoyeur, MongoUtilisateur mongoUtilisateurReceveur) {
         return messagerieRepository.findAllByMongoUtilisateurEchange(mongoUtilisateurEnvoyeur, mongoUtilisateurReceveur);
     }
 

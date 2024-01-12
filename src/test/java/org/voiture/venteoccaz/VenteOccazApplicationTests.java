@@ -96,13 +96,13 @@ class VenteOccazApplicationTests {
             utilisateur1  = new MongoUtilisateur(utilisateurRepository.findById(id).get());
 
         List<MongoUtilisateur> contacts = messagerieService.getContacts(utilisateur1);
-        Optional<List<Messagerie>> messagerie = messagerieService.getEchanges(utilisateur1, contacts.get(0));
+        Optional<Messagerie> messagerie = messagerieService.getEchanges(utilisateur1, contacts.get(0));
 
         System.out.println("=============\n"+messagerie+"\n=============");
 
         Message message = new Message(utilisateur1, contacts.get(0), "Dernier message de test, je veux m'assurer que ca marche 🔥", LocalDateTime.now());
         if(messagerie.isPresent())
-
+            messagerie = Optional.ofNullable(messagerieService.envoyerMessage(messagerie.get(), message));
 
         System.out.println("=============\n"+messagerie+"\n=============");
     }
@@ -121,8 +121,6 @@ class VenteOccazApplicationTests {
         messagerieRepository.deleteAll();
         System.out.println("=============\n DELETED ! \n=============");
     }
-
-
 
 
 }
