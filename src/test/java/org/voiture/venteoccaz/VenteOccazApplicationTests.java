@@ -24,7 +24,13 @@ class VenteOccazApplicationTests {
     @Test
     void selectMessagerie() {
         List<Messagerie> messagerieList = messagerieRepository.findAll();
-        System.out.println("=============\n"+messagerieList+"\n=========");
+        System.out.println("=============\n"+messagerieList+"\n=============");
+    }
+
+    @Test
+    void insertMessagerie() {
+        List<Messagerie> messagerieList = messagerieRepository.findAll();
+        System.out.println("=============\n"+messagerieList+"\n=============");
     }
 
 }

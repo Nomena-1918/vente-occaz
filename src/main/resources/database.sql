@@ -1,3 +1,6 @@
+
+
+
 CREATE  TABLE categories (
          idcategorie          serial  NOT NULL  ,
          nomcategorie         varchar(255)  NOT NULL  ,
