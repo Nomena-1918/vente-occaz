@@ -95,6 +95,7 @@ class VenteOccazApplicationTests {
         if (utilisateurRepository.findById(id).isPresent())
             utilisateur1  = new MongoUtilisateur(utilisateurRepository.findById(id).get());
 
+
         List<MongoUtilisateur> contacts = messagerieService.getContacts(utilisateur1);
         Optional<Messagerie> messagerie = messagerieService.getEchanges(utilisateur1, contacts.get(0));
 
