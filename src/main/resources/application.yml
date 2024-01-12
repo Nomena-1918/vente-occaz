@@ -1,14 +1,9 @@
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: admin
-      username: nomena
-      password: root
-
+      uri: mongodb://nomena:root@localhost:27017/admin
   datasource:
-    url: jdbc:postgresql://localhost:5432/voiture
+    url: jdbc:postgresql://localhost:5433/voiture
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
