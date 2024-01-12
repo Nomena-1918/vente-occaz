@@ -20,4 +20,13 @@ public class Message {
     String texte;
     LocalDateTime dateHeureEnvoi;
 
+    public Message(MongoUtilisateur envoyeur, MongoUtilisateur recepteur, String texte, LocalDateTime dateHeureEnvoi) {
+        this.envoyeur = envoyeur;
+        this.recepteur = recepteur;
+        this.texte = texte;
+        this.dateHeureEnvoi = dateHeureEnvoi;
+    }
+
+    public Message() {
+    }
 }
