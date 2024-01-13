@@ -32,5 +32,4 @@ public class Messagerie {
         this.echanges = echanges;
         this.dateHeureCreation = dateHeureCreation;
     }
-
 }

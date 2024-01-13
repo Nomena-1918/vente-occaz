@@ -15,7 +15,7 @@ import org.voiture.venteoccaz.models.Utilisateur;
 @Document(collection="messages")
 public class Message {
     @Id
-    ObjectId idMessage;
+    ObjectId id;
     @DBRef
     Messagerie messagerie;
     @DBRef

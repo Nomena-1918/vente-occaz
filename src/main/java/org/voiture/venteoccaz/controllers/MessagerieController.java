@@ -72,7 +72,7 @@ public class MessagerieController {
 
     // Mesagerie entre les 2 users
     @GetMapping("/messageries/{idEnvoyeur}/{idReceveur}")
-    public ResponseEntity<Reponse> getEchangeMessage(@RequestHeader Map<String,String> headers, @RequestParam Integer idEnvoyeur, @RequestParam Integer idReceveur) {
+    public ResponseEntity<Reponse> getEchangeMessage(@RequestHeader Map<String,String> headers, @PathVariable Integer idEnvoyeur, @PathVariable Integer idReceveur) {
         try {
             authService.validateAuthorizationVoid(headers);
 
@@ -84,7 +84,6 @@ public class MessagerieController {
                 return new ResponseEntity<>(new Reponse("200", "Contact correspondant", messagerie), HttpStatus.OK);
             else
                 return new ResponseEntity<>(new Reponse("403", "Messagerie non-existante entre "+mongoUtilisateurEnvoyeur.getEmail()+" et "+mongoUtilisateurReceveur.getEmail(), messagerie), HttpStatus.OK);
-
         }
         catch (AccessDeniedException e) {
             return new ResponseEntity<>(new Reponse("403", e.getMessage()), HttpStatus.FORBIDDEN);
@@ -96,8 +95,8 @@ public class MessagerieController {
 
 
     // Envoi message
-    @PutMapping("/messagerie/{idEnvoyeur}/{idReceveur}")
-    public ResponseEntity<Reponse> envoyerMessage(@RequestHeader Map<String,String> headers, @RequestParam Integer idEnvoyeur, @RequestParam Integer idReceveur, @RequestBody String message) {
+    @PutMapping("/messageries/{idEnvoyeur}/{idReceveur}")
+    public ResponseEntity<Reponse> envoyerMessage(@RequestHeader Map<String,String> headers, @PathVariable Integer idEnvoyeur, @PathVariable Integer idReceveur, @RequestBody String message) {
         try {
             authService.validateAuthorizationVoid(headers);
 
@@ -105,15 +104,14 @@ public class MessagerieController {
             MongoUtilisateur mongoUtilisateurReceveur = mongoUtilisateurService.getUtilisateurById(idReceveur);
 
             Optional<Messagerie> messagerie = messagerieService.getEchanges(mongoUtilisateurEnvoyeur, mongoUtilisateurReceveur);
-            Messagerie messagerieUpdate;
 
             if (messagerie.isPresent()) {
                 Message mess = new Message(mongoUtilisateurEnvoyeur, mongoUtilisateurReceveur, message, LocalDateTime.now());
-                messagerieUpdate = messagerieService.envoyerMessage(mess, messagerie.get().getId());
-                return new ResponseEntity<>(new Reponse("200", "Message envoyé", messagerieUpdate), HttpStatus.OK);
+                messagerieService.envoyerMessage(mess, messagerie.get().getId());
+                return new ResponseEntity<>(new Reponse("200", "Message envoyé", message), HttpStatus.OK);
             }
             else
-                return new ResponseEntity<>(new Reponse("403", "Messagerie non-existante entre "+mongoUtilisateurEnvoyeur.getEmail()+" et "+mongoUtilisateurReceveur.getEmail(), messagerie), HttpStatus.OK);
+                return new ResponseEntity<>(new Reponse("404", "Messagerie inexistante entre "+mongoUtilisateurEnvoyeur.getEmail()+" et "+mongoUtilisateurReceveur.getEmail(), messagerie), HttpStatus.NOT_FOUND);
         }
         catch (AccessDeniedException e) {
             return new ResponseEntity<>(new Reponse("403", e.getMessage()), HttpStatus.FORBIDDEN);
@@ -122,6 +120,5 @@ public class MessagerieController {
             return new ResponseEntity<>(new Reponse("404", e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
-
 
 }
