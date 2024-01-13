@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.voiture.venteoccaz.Reponse.Reponse;
 
+import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
 import org.voiture.venteoccaz.services.AuthService;
 
@@ -38,14 +39,15 @@ public class AuthController {
         return getReponseResponseEntity(user);
     }
 
-    private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
-        Reponse reponse = authService.authenticate(utilisateur);
-        HttpStatus httpStatus = switch (reponse.getCode()) {
-            case "200" -> HttpStatus.OK;
-            case "403" -> HttpStatus.FORBIDDEN;
-            default -> HttpStatus.UNAUTHORIZED;
-        };
-        return new ResponseEntity<>(reponse, httpStatus);
+    @PostMapping("/login-by-code")
+    public ResponseEntity<Reponse> LoginByCode(@RequestParam String code) {
+        Optional<Session> session = authService.isRegisteredCode(code);
+        return session.map(
+                value -> new ResponseEntity<>(new Reponse("200", "Connecté !", value), HttpStatus.OK)
+                )
+                .orElseGet(
+                        () -> new ResponseEntity<>(new Reponse("403", "Non authentifié !", null), HttpStatus.FORBIDDEN)
+                );
     }
 
     @PostMapping("/logout")
@@ -63,5 +65,16 @@ public class AuthController {
             return new ResponseEntity<>(new Reponse("500", "Erreur serveur", e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
+
+    private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+        Reponse reponse = authService.authenticate(utilisateur);
+        HttpStatus httpStatus = switch (reponse.getCode()) {
+            case "200" -> HttpStatus.OK;
+            case "403" -> HttpStatus.FORBIDDEN;
+            default -> HttpStatus.UNAUTHORIZED;
+        };
+        return new ResponseEntity<>(reponse, httpStatus);
+    }
+
 
 }
