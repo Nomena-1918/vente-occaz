@@ -4,7 +4,7 @@ spring:
   #     uri: mongodb://nomena:root@localhost:27017/admin
   datasource:
     url: jdbc:postgresql://dpg-clee2dc15k1s73d68i40-a.oregon-postgres.render.com:5432/remote_db_lwp4
-    username: postgres
+    username: yoan
     password: 0WlFaGcyjy1R4Q1pIQkUvMEHjc1iA4Q3
     driver-class-name: org.postgresql.Driver
   jpa:
