@@ -64,7 +64,12 @@
 			<groupId>org.springframework.data</groupId>
 			<version>4.2.1</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <artifactId>junit</artifactId>
+            <groupId>junit</groupId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

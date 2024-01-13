@@ -1,6 +1,6 @@
 package org.voiture.venteoccaz.Repositories.mongodb;
 
-import org.springframework.data.mongodb.repository.Aggregation;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,13 +12,14 @@ import java.util.Optional;
 
 
 @Repository
-public interface MessagerieRepository extends MongoRepository<Messagerie, Long> {
-    @Query(value = "{ '$or': [{'envoyeur': ?0}, {'recepteur': ?0}]}",
-            fields = "{ 'recepteur': { '$cond': { 'if': { '$eq': ['$envoyeur', ?0] }, 'then': '$recepteur', 'else': '$envoyeur' } } }")
-    Optional<List<RecepteurOnly>> findAllByMongoUtilisateur(MongoUtilisateur mongoUtilisateur);
+public interface MessagerieRepository extends MongoRepository<Messagerie, ObjectId> {
+    @Query(value = "{ 'envoyeur.$id' : ?0 }", fields = "{ 'recepteur': 1 }")
+    Optional<List<RecepteurOnly>> findAllContactsByMongoUtilisateurAsSender(ObjectId id);
 
-    @Query("{ '$or': [{'envoyeur': ?0, 'recepteur': ?1},  {'envoyeur': ?1, 'recepteur': ?0}]}")
-    @Aggregation("{'$group': {'_id': '$_id'}}")
-    Optional<Messagerie> findAllByMongoUtilisateurEchange(MongoUtilisateur mongoUtilisateurEnvoyeur, MongoUtilisateur mongoUtilisateurReceveur);
+    @Query(value = "{ 'recepteur.$id' : ?0 }", fields = "{ 'envoyeur': 1 }")
+    Optional<List<EnvoyeurOnly>> findAllContactsByMongoUtilisateurAsReceiver(ObjectId id);
+
+    @Query("{ '$or': [{'envoyeur': ?0, 'recepteur': ?1}, {'envoyeur': ?1, 'recepteur': ?0}]}")
+    Optional<List<Messagerie>> findAllByMongoUtilisateurEchange(ObjectId IdMongoUtilisateurEnvoyeur, ObjectId IdMongoUtilisateurReceveur);
 
 }

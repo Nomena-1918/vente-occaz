@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.voiture.venteoccaz.models.Utilisateur;
 
@@ -16,9 +17,12 @@ import org.voiture.venteoccaz.models.Utilisateur;
 public class Messagerie {
 
     @Id
-    ObjectId idMessagerie;
+    ObjectId id;
+    @DBRef
     MongoUtilisateur envoyeur;
+    @DBRef
     MongoUtilisateur recepteur;
+    @DBRef
     List<Message> echanges;
     LocalDateTime dateHeureCreation;
 
@@ -29,6 +33,4 @@ public class Messagerie {
         this.dateHeureCreation = dateHeureCreation;
     }
 
-    public Messagerie() {
-    }
 }

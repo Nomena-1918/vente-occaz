@@ -2,6 +2,7 @@ package org.voiture.venteoccaz.models.mongodb;
 
 import jakarta.persistence.Id;
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.voiture.venteoccaz.models.Utilisateur;
 
@@ -9,6 +10,7 @@ import org.voiture.venteoccaz.models.Utilisateur;
 @Document(collection="mongo_utilisateurs")
 public class MongoUtilisateur {
     @Id
+    ObjectId id;
     Integer idUtilisateur;
     String email;
 
