@@ -43,7 +43,7 @@ class VenteOccazApplicationTests {
     // Contact :
     // u1 avec u2
     @Test
-    void ajouterContact() {
+    void ajouterContact() throws Exception {
         // Créer des utilisateurs de test
         int id = 2;
         MongoUtilisateur u1 = null;
@@ -64,7 +64,7 @@ class VenteOccazApplicationTests {
     // Contact :
     // u2 avec u3
     @Test
-    void ajouterContactBis() {
+    void ajouterContactBis() throws Exception {
         int id = 3;
         MongoUtilisateur u2 = null;
         if (utilisateurRepository.findById(id).isPresent())

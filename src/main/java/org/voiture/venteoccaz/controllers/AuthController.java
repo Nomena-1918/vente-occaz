@@ -8,7 +8,7 @@ import org.voiture.venteoccaz.Reponse.Reponse;
 
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
-import org.voiture.venteoccaz.services.AuthService;
+import org.voiture.venteoccaz.services.authentification.AuthService;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

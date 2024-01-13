@@ -1,4 +1,4 @@
-package org.voiture.venteoccaz.services;
+package org.voiture.venteoccaz.services.authentification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.Repositories.SessionRepository;
 import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
+import org.voiture.venteoccaz.exception.AccessDeniedException;
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
 import org.voiture.venteoccaz.util.CodeGenerator;
@@ -54,6 +55,12 @@ public class AuthService {
     public Boolean validateAuthorization(Map<String,String> headers) {
         String token = headers.get("authorization");
         return token != null && getSessionWithToken(token).isPresent();
+    }
+
+    public void validateAuthorizationVoid(Map<String,String> headers) throws Exception {
+        String token = headers.get("authorization");
+        if (!(token != null && getSessionWithToken(token).isPresent()))
+            throw new AccessDeniedException("Non authorisé");
     }
 
     public void expireToken(String token) {

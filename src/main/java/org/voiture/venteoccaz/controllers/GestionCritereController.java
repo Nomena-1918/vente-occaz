@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.Repositories.*;
 import org.voiture.venteoccaz.models.*;
-import org.voiture.venteoccaz.services.AuthService;
+import org.voiture.venteoccaz.services.authentification.AuthService;
 
 import java.util.Map;
 

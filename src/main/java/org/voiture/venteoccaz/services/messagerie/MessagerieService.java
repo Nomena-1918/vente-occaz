@@ -43,7 +43,6 @@ public class MessagerieService {
 
 
     // Prendre tous les contacts d'un utilisateur
-    // select recepteur case when m.recepteur = utilisateur then m.recepteur = utilisateur default m.envoyeur from from Messagerie m where m.recepteur = utilisateur or m.envoyeur = utilisateur;
     public List<MongoUtilisateur> getContacts(ObjectId id) {
         List<MongoUtilisateur> listUser = new ArrayList<>();
         Optional<List<RecepteurOnly>> listS =  messagerieRepository.findAllContactsByMongoUtilisateurAsSender(id);
