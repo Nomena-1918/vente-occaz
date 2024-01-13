@@ -42,9 +42,14 @@ public class AuthService {
         return utilisateurRepository.findAllByEmailAndMotDePasse(email, motDePasse);
     }
 
+    public Optional<Session> isRegisteredCode(String code) {
+        return sessionRepository.findAllByCodeConnected(code);
+    }
+
     public Optional<Session> getSessionWithToken(String token) {
         return sessionRepository.findByToken(token.replace("Bearer ", ""));
     }
+
 
     public Boolean validateAuthorization(Map<String,String> headers) {
         String token = headers.get("authorization");
