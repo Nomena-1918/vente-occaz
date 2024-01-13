@@ -52,8 +52,8 @@ public class MessagerieController {
     }
 
     // Contacts d'un utilisateur
-    @GetMapping("/contacts")
-    public ResponseEntity<Reponse> getAllContact(@RequestHeader Map<String,String> headers, @RequestParam Integer idUtilisateur) {
+    @GetMapping("/contacts/{idUtilisateur}")
+    public ResponseEntity<Reponse> getAllContact(@RequestHeader Map<String,String> headers, @PathVariable Integer idUtilisateur) {
         try {
             authService.validateAuthorizationVoid(headers);
 
@@ -71,7 +71,7 @@ public class MessagerieController {
     }
 
     // Mesagerie entre les 2 users
-    @GetMapping("/messagerie/{idEnvoyeur}/{idReceveur}")
+    @GetMapping("/messageries/{idEnvoyeur}/{idReceveur}")
     public ResponseEntity<Reponse> getEchangeMessage(@RequestHeader Map<String,String> headers, @RequestParam Integer idEnvoyeur, @RequestParam Integer idReceveur) {
         try {
             authService.validateAuthorizationVoid(headers);
@@ -95,7 +95,7 @@ public class MessagerieController {
     }
 
 
-    // Mesagerie entre les 2 users
+    // Envoi message
     @PutMapping("/messagerie/{idEnvoyeur}/{idReceveur}")
     public ResponseEntity<Reponse> envoyerMessage(@RequestHeader Map<String,String> headers, @RequestParam Integer idEnvoyeur, @RequestParam Integer idReceveur, @RequestBody String message) {
         try {
