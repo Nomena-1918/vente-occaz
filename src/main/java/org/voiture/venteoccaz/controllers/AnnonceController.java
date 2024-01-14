@@ -3,6 +3,7 @@ package org.voiture.venteoccaz.controllers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 // import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 import org.voiture.venteoccaz.Reponse.Reponse;
@@ -16,6 +17,26 @@ public class AnnonceController {
 
     @Autowired
     private AnnonceService annonceService;
+
+    @GetMapping("/favoris/{idUtilisateur}")
+    public ResponseEntity<Reponse> getFavoris(@PathVariable Integer idUtilisateur) {
+        try {
+            List<Annonce> favoris = annonceService.getAllAnnonceFavoris(idUtilisateur);
+            return ResponseEntity.ok(new Reponse(favoris));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/historique-annonce/{idUtilisateur}")
+    public ResponseEntity<Reponse> getHistoriqueAnnonce(@PathVariable Integer idUtilisateur) {
+        try {
+            List<Annonce> historiqueAnnonce = annonceService.getAllAnnonceByIdUtilisateur(idUtilisateur);
+            return ResponseEntity.ok(new Reponse(historiqueAnnonce));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
 
     @PostMapping("/setAnnonceVendue")
     public ResponseEntity<Reponse> setAnnonceVendue(@RequestParam Integer idUtilisateur,@RequestParam Integer idAnnonce) {
