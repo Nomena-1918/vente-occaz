@@ -1,8 +1,10 @@
 package org.voiture.venteoccaz;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
 import org.voiture.venteoccaz.Repositories.mongodb.MessageRepository;
 import org.voiture.venteoccaz.Repositories.mongodb.MessagerieRepository;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
+@ExtendWith(SpringExtension.class)
 class VenteOccazApplicationTests {
     private final UtilisateurRepository utilisateurRepository;
     private final MessagerieRepository messagerieRepository;
@@ -199,7 +202,7 @@ class VenteOccazApplicationTests {
 
 
         messagerie = messagerieService.getEchanges(u1, u2);
-        message = new Message(u1, u2, "Je me porte comme un charme, c'est OK pour le rendez-vous du Vendredi prochain ?", LocalDateTime.now());
+        message = new Message(u1, u2, "Je me porte comme un charme, c'est OK pour le rendez-vous de Vendredi prochain ?", LocalDateTime.now());
         if (messagerie.isPresent())
             m = messagerieService.envoyerMessage(message, messagerie.get().getId());
 
@@ -222,7 +225,6 @@ class VenteOccazApplicationTests {
     @Test
     void selectMessagerie() {
         List<Messagerie> messagerieList = messagerieRepository.findAll();
-        System.out.println("=============\n"+messagerieList+"\n=============");
     }
 
     @Test
