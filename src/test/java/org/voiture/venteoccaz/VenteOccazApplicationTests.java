@@ -119,28 +119,104 @@ class VenteOccazApplicationTests {
     }
 
     // Message :
-    // u2 -> u3
+    // u2 <-> u3
     @Test
     void envoyerMessage() throws Exception {
-        int id = 4;
+        int id = 3;
         MongoUtilisateur u2 = null;
         if (utilisateurRepository.findById(id).isPresent())
             u2  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
 
-        assert u2 != null;
-        var contacts = messagerieService.getContacts(u2.getId());
-        MongoUtilisateur u3 = contacts.get(0);
+        id = 4;
+        MongoUtilisateur u3 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            u3  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
+
+        var mess = messagerieService.ajouterContact(u2, u3);
 
         assert u3 != null;
+        assert u2 != null;
         var messagerie = messagerieService.getEchanges(u2, u3);
-
-        Message message = new Message(u2, u3, "Dernier message de test, je veux m'assurer que ca marche 🔥", LocalDateTime.now());
-
+        Message message = new Message(u2, u3, "Bonjour u3 c'est u2", LocalDateTime.now());
         Messagerie m = null;
         if (messagerie.isPresent())
             m = messagerieService.envoyerMessage(message, messagerie.get().getId());
 
-        System.out.println("=============\n"+m+"\n=============");
+         messagerie = messagerieService.getEchanges(u2, u3);
+         message = new Message(u3, u2, "Salut u2, comment ca va ?", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+
+        messagerie = messagerieService.getEchanges(u2, u3);
+        message = new Message(u2, u3, "Je me porte à merveille, pour la Ford Fiesta, y a moyen d'avoir une remise de 5% ?", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+
+        messagerie = messagerieService.getEchanges(u2, u3);
+        message = new Message(u3, u2, "Malheureusement non, c'est un prix fixe ce ne sera pas possible Monsieur", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+
+        messagerie = messagerieService.getEchanges(u2, u3);
+        message = new Message(u2, u3, "D'accord, bonne journée à vous ! 🙂", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+    }
+
+
+    // Message :
+    // u1 <-> u2
+    @Test
+    void envoyerMessageTotal() throws Exception {
+        int id = 2;
+        MongoUtilisateur u1 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            u1  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
+
+        id = 3;
+        MongoUtilisateur u2 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            u2  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
+
+        var mess = messagerieService.ajouterContact(u1, u2);
+
+        assert u2 != null;
+        assert u1 != null;
+        var messagerie = messagerieService.getEchanges(u1, u2);
+        Message message = new Message(u1, u2, "Bien le bonjour u2 c'est u1", LocalDateTime.now());
+        Messagerie m = null;
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+        messagerie = messagerieService.getEchanges(u1, u2);
+        message = new Message(u2, u1, "Bonjour bonjour, comment allez-vous ?", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+
+        messagerie = messagerieService.getEchanges(u1, u2);
+        message = new Message(u1, u2, "Je me porte comme un charme, c'est OK pour le rendez-vous du Vendredi prochain ?", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+
+
+        messagerie = messagerieService.getEchanges(u1, u2);
+        message = new Message(u2, u1, "Oui bien sûr ce sera l'occasion de tester votre Chevrolet", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+
+
+        messagerie = messagerieService.getEchanges(u2, u1);
+        message = new Message(u1, u2, "Parfait 🙂, au plaisir de vous rencontrer", LocalDateTime.now());
+        if (messagerie.isPresent())
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
     }
 
     @Test
