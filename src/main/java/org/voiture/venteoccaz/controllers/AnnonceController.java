@@ -108,6 +108,16 @@ public class AnnonceController {
         }
     }
 
+    @GetMapping("/non-vendues-nofiltre")
+    public ResponseEntity<Reponse> getValidatedNonVendueAnnonces() {
+        try {
+            List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAllAnnoncesValidesNonVendues();
+            return ResponseEntity.ok(new Reponse("200","liste des annonces", allAnnoncesValidesNonVendues));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
     @GetMapping("/non-vendues-nofiltre/{idUtilisateur}")
     public ResponseEntity<Reponse> getValidatedNonVendueAnnonces(@RequestHeader Map<String,String> headers, @PathVariable Integer idUtilisateur) {
         try {

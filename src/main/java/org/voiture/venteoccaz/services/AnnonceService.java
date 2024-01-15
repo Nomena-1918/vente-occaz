@@ -137,7 +137,9 @@ public class AnnonceService {
 
     public List<Annonce> getAllAnnoncesValidesNonVendues() {
         List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus();
+        // System.out.println(">>>>>>>>>>>> "+annoncesWithFavorisStatus.size());
         List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
+        // System.out.println(">>>>>>>>>>>> "+annoncesWithFavorisStatus.size());
         return allAnnoncesValidesNonVendues;
     }
 
