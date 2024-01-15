@@ -10,7 +10,7 @@ spring:
     # url: jdbc:postgresql://localhost:5432/voiture
     # username: postgres
     # password: root
-    # driver-class-name: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: none
