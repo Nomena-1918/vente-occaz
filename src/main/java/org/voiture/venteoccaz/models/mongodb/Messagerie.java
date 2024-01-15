@@ -3,6 +3,7 @@ package org.voiture.venteoccaz.models.mongodb;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +18,7 @@ import org.voiture.venteoccaz.models.Utilisateur;
 public class Messagerie {
 
     @Id
+    @JsonIgnore
     ObjectId id;
     @DBRef
     MongoUtilisateur envoyeur;

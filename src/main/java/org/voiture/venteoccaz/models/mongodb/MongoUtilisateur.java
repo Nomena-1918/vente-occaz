@@ -1,5 +1,6 @@
 package org.voiture.venteoccaz.models.mongodb;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Id;
 import lombok.Data;
 import org.bson.types.ObjectId;
@@ -10,6 +11,7 @@ import org.voiture.venteoccaz.models.Utilisateur;
 @Document(collection="mongo_utilisateurs")
 public class MongoUtilisateur {
     @Id
+    @JsonIgnore
     ObjectId id;
     Integer idUtilisateur;
     String email;
