@@ -16,7 +16,6 @@ import org.voiture.venteoccaz.services.authentification.AuthService;
 @RestController
 @RequestMapping("api/v1/annonces")
 public class AnnonceController {
-
     private final AnnonceService annonceService;
     private final AuthService authService;
 
