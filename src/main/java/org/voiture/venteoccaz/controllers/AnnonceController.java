@@ -98,6 +98,16 @@ public class AnnonceController {
         }
     }
 
+    @GetMapping("/non-vendues/{idCategorie}/{idMarque}/{idModele}/{prixMin}/{prixMax}")
+    public ResponseEntity<Reponse> getValidatedNonVendueAnnonces(@PathVariable Integer idCategorie,@PathVariable Integer idMarque,@PathVariable Integer idModele,@PathVariable Double prixMin,@PathVariable  Double prixMax) {
+        try {
+            List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAllAnnoncesValidesNonVendues(idCategorie, idMarque, idModele, prixMin, prixMax);
+            return ResponseEntity.ok(new Reponse("200","liste des annonces", allAnnoncesValidesNonVendues));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
     @GetMapping("/non-vendues-nofiltre/{idUtilisateur}")
     public ResponseEntity<Reponse> getValidatedNonVendueAnnonces(@RequestHeader Map<String,String> headers, @PathVariable Integer idUtilisateur) {
         try {

@@ -125,6 +125,22 @@ public class AnnonceService {
         return allAnnoncesValidesNonVendues;
     }
 
+    public List<Annonce> getAllAnnoncesValidesNonVendues(Integer idCategorie,Integer idMarque,Integer idModele,Double prixMin, Double prixMax) {
+        if(idCategorie == null || idMarque == null || idModele == null || prixMin == null || prixMax == null) {
+            return getAllAnnoncesValidesNonVendues();
+        }
+        
+        List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus(idCategorie, idMarque, idModele, prixMin, prixMax);
+        List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
+        return allAnnoncesValidesNonVendues; 
+    }
+
+    public List<Annonce> getAllAnnoncesValidesNonVendues() {
+        List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus();
+        List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
+        return allAnnoncesValidesNonVendues;
+    }
+
     public List<Annonce> getAnnonceWithFavoris(List<Object []> annoncesWithFavorisStatus) {
         List<Annonce> allAnnoncesValidesNonVendues =  new ArrayList<>();
         Annonce annonce = null;
