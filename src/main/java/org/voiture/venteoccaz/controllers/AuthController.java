@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.voiture.venteoccaz.Reponse.Reponse;
 
+import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
 import org.voiture.venteoccaz.services.authentification.AuthService;
@@ -20,9 +21,11 @@ import java.util.Optional;
 @RequestMapping("api/v1")
 public class AuthController {
     private final AuthService authService;
+    private final UtilisateurRepository utilisateurRepository;
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, UtilisateurRepository utilisateurRepository) {
         this.authService = authService;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     @PostMapping("/login-admin")
@@ -69,10 +72,13 @@ public class AuthController {
     // Inscription : insert utilisateur dans PostgreSQL
     @PostMapping("/inscription")
     public ResponseEntity<Reponse> Inscription(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
-        System.out.println("utilisateur.getEmail() "+utilisateur.getEmail());
-        System.out.println("utilisateur.getMotDePasse() "+utilisateur.getMotDePasse());
         Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
-        return getReponseResponseEntity(user);
+
+        if(user.isPresent())
+            return new ResponseEntity<>(new Reponse("500", "Utilisateur déjà présent dans la base de donnée", null), HttpStatus.CONFLICT);
+
+        Utilisateur newUser = utilisateurRepository.save(utilisateur);
+        return getReponseResponseEntity(Optional.of(newUser));
     }
 
     private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
