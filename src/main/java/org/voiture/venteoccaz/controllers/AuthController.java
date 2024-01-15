@@ -69,7 +69,6 @@ public class AuthController {
         }
     }
 
-    // Inscription : insert utilisateur dans PostgreSQL
     @PostMapping("/inscription")
     public ResponseEntity<Reponse> Inscription(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
         Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
