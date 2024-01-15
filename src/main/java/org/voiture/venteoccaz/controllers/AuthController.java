@@ -66,6 +66,15 @@ public class AuthController {
         }
     }
 
+    // Inscription : insert utilisateur dans PostgreSQL
+    @PostMapping("/inscription")
+    public ResponseEntity<Reponse> Inscription(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+        System.out.println("utilisateur.getEmail() "+utilisateur.getEmail());
+        System.out.println("utilisateur.getMotDePasse() "+utilisateur.getMotDePasse());
+        Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
+        return getReponseResponseEntity(user);
+    }
+
     private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
         Reponse reponse = authService.authenticate(utilisateur);
         HttpStatus httpStatus = switch (reponse.getCode()) {
