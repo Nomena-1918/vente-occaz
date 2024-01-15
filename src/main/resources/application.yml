@@ -1,16 +1,11 @@
 spring:
   data:
     mongodb:
-      #uri: mongodb://mongo:Bdf-E6GE1fhAaDBa31EdC61G41A-gAGh@monorail.proxy.rlwy.net:54701/admin
-      uri: mongodb://nomena:root@localhost:27017/admin
+      uri: mongodb://mongo:Bdf-E6GE1fhAaDBa31EdC61G41A-gAGh@monorail.proxy.rlwy.net:54701/admin
   datasource:
-    #url: jdbc:postgresql://viaduct.proxy.rlwy.net:55313/railway
-    #username: postgres
-    #password: ag2CBEegb6fBe1GdgAd6cbbDdF5cgac1
-
-    url: jdbc:postgresql://localhost:5433/voiture
-    username: nomena
-    password: root
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:55313/railway
+    username: postgres
+    password: ag2CBEegb6fBe1GdgAd6cbbDdF5cgac1
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
