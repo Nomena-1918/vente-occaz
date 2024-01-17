@@ -18,7 +18,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
         @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE a.proprietaire.idUtilisateur = :idUtilisateur ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAllAnnonceByIdUtilisateur(@Param("idUtilisateur") Integer idUtilisateur);
 
-        @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE e.typeEtat = 10 AND NOT EXISTS (SELECT 1 FROM a.etats e2 WHERE e2.typeEtat = 100) AND a.categorie.idCategorie = :idCategorie AND a.marque.idMarque = :idMarque AND a.modele.idModele = :idModele AND a.prix >= :prixMin AND a.prix <= :prixMax ORDER BY e.dateHeureEtat DESC")
+        @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE e.typeEtat = 10 AND NOT EXISTS (SELECT 1 FROM a.etats e2 WHERE e2.typeEtat = 100) AND a.proprietaire.idUtilisateur = :idUtilisateur AND a.categorie.idCategorie = :idCategorie AND a.marque.idMarque = :idMarque AND a.modele.idModele = :idModele AND a.prix >= :prixMin AND a.prix <= :prixMax ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAnnoncesValideNonVenduWithFavorisStatus(@Param("idUtilisateur") Integer idUtilisateur,
                 @Param("idCategorie") Integer idCategorie, @Param("idMarque") Integer idMarque,
                 @Param("idModele") Integer idModele, @Param("prixMin") Double prixMin, @Param("prixMax") Double prixMax);
@@ -28,7 +28,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
                 @Param("idCategorie") Integer idCategorie, @Param("idMarque") Integer idMarque,
                 @Param("idModele") Integer idModele, @Param("prixMin") Double prixMin, @Param("prixMax") Double prixMax);
 
-        @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE e.typeEtat = 10 AND NOT EXISTS (SELECT 1 FROM a.etats e2 WHERE e2.typeEtat = 100) ORDER BY e.dateHeureEtat DESC")
+        @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE e.typeEtat = 10 AND NOT EXISTS (SELECT 1 FROM a.etats e2 WHERE e2.typeEtat = 100) AND a.proprietaire.idUtilisateur = :idUtilisateur ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAnnoncesValideNonVenduWithFavorisStatus(@Param("idUtilisateur") Integer idUtilisateur);
 
         @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE e.typeEtat = 10 AND NOT EXISTS (SELECT 1 FROM a.etats e2 WHERE e2.typeEtat = 100) ORDER BY e.dateHeureEtat DESC")

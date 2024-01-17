@@ -22,96 +22,96 @@ CREATE SEQUENCE typeoccasions_idtypeoccasion_seq START WITH 1 INCREMENT BY 1;
 
 CREATE SEQUENCE utilisateurs_idutilisateur_seq START WITH 1 INCREMENT BY 1;
 
-CREATE  TABLE categories (
-                             idcategorie          integer DEFAULT nextval('categories_idcategorie_seq'::regclass) NOT NULL  ,
-                             nomcategorie         varchar(255)  NOT NULL  ,
-                             CONSTRAINT pk_categories PRIMARY KEY ( idcategorie )
-);
+CREATE  TABLE categories ( 
+	idcategorie          integer DEFAULT nextval('categories_idcategorie_seq'::regclass) NOT NULL  ,
+	nomcategorie         varchar(255)  NOT NULL  ,
+	CONSTRAINT pk_categories PRIMARY KEY ( idcategorie )
+ );
 
-CREATE  TABLE commission_defaut (
-                                    valeur               numeric(10,2) DEFAULT 20 NOT NULL
-);
+CREATE  TABLE commission_defaut ( 
+	valeur               numeric(10,2) DEFAULT 20 NOT NULL  
+ );
 
-CREATE  TABLE couleurs (
-                           idcouleur            integer DEFAULT nextval('couleurs_idcouleur_seq'::regclass) NOT NULL  ,
-                           nomcouleur           varchar(255)  NOT NULL  ,
-                           CONSTRAINT pk_couleurs PRIMARY KEY ( idcouleur )
-);
+CREATE  TABLE couleurs ( 
+	idcouleur            integer DEFAULT nextval('couleurs_idcouleur_seq'::regclass) NOT NULL  ,
+	nomcouleur           varchar(255)  NOT NULL  ,
+	CONSTRAINT pk_couleurs PRIMARY KEY ( idcouleur )
+ );
 
-CREATE  TABLE marques (
-                          idmarque             integer DEFAULT nextval('marques_idmarque_seq'::regclass) NOT NULL  ,
-                          nommarque            varchar(255)  NOT NULL  ,
-                          CONSTRAINT pk_marques PRIMARY KEY ( idmarque )
-);
+CREATE  TABLE marques ( 
+	idmarque             integer DEFAULT nextval('marques_idmarque_seq'::regclass) NOT NULL  ,
+	nommarque            varchar(255)  NOT NULL  ,
+	CONSTRAINT pk_marques PRIMARY KEY ( idmarque )
+ );
 
-CREATE  TABLE modeles (
-                          idmodele             integer DEFAULT nextval('modeles_idmodele_seq'::regclass) NOT NULL  ,
-                          nommodele            varchar(255)  NOT NULL  ,
-                          CONSTRAINT pk_modeles PRIMARY KEY ( idmodele )
-);
+CREATE  TABLE modeles ( 
+	idmodele             integer DEFAULT nextval('modeles_idmodele_seq'::regclass) NOT NULL  ,
+	nommodele            varchar(255)  NOT NULL  ,
+	CONSTRAINT pk_modeles PRIMARY KEY ( idmodele )
+ );
 
-CREATE  TABLE typeoccasions (
-                                idtypeoccasion       integer DEFAULT nextval('typeoccasions_idtypeoccasion_seq'::regclass) NOT NULL  ,
-                                nomtypeoccasion      varchar(255)  NOT NULL  ,
-                                CONSTRAINT pk_typeoccasions PRIMARY KEY ( idtypeoccasion )
-);
+CREATE  TABLE typeoccasions ( 
+	idtypeoccasion       integer DEFAULT nextval('typeoccasions_idtypeoccasion_seq'::regclass) NOT NULL  ,
+	nomtypeoccasion      varchar(255)  NOT NULL  ,
+	CONSTRAINT pk_typeoccasions PRIMARY KEY ( idtypeoccasion )
+ );
 
-CREATE  TABLE utilisateurs (
-                               idutilisateur        integer DEFAULT nextval('utilisateurs_idutilisateur_seq'::regclass) NOT NULL  ,
-                               email                varchar(255)  NOT NULL  ,
-                               motdepasse           varchar(255)  NOT NULL  ,
-                               isadmin              integer  NOT NULL  ,
-                               CONSTRAINT pk_utilisateurs PRIMARY KEY ( idutilisateur )
-);
+CREATE  TABLE utilisateurs ( 
+	idutilisateur        integer DEFAULT nextval('utilisateurs_idutilisateur_seq'::regclass) NOT NULL  ,
+	email                varchar(255)  NOT NULL  ,
+	motdepasse           varchar(255)  NOT NULL  ,
+	isadmin              integer  NOT NULL  ,
+	CONSTRAINT pk_utilisateurs PRIMARY KEY ( idutilisateur )
+ );
 
-CREATE  TABLE annonces (
-                           idannonce            integer DEFAULT nextval('annonces_idannonce_seq'::regclass) NOT NULL  ,
-                           idutilisateur        integer  NOT NULL  ,
-                           idtypeoccasion       integer  NOT NULL  ,
-                           idcategorie          integer  NOT NULL  ,
-                           idcouleur            integer  NOT NULL  ,
-                           idmodele             integer  NOT NULL  ,
-                           idmarque             integer  NOT NULL  ,
-                           prix                 numeric(10,2)  NOT NULL  ,
-                           pourcentagecommission numeric(10,2) DEFAULT 0 NOT NULL  ,
-                           description          text  NOT NULL  ,
-                           etatannonce          integer DEFAULT 0 NOT NULL  ,
-                           dateheurecreation    timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
-                           CONSTRAINT pk_annonces PRIMARY KEY ( idannonce )
-);
+CREATE  TABLE annonces ( 
+	idannonce            integer DEFAULT nextval('annonces_idannonce_seq'::regclass) NOT NULL  ,
+	idutilisateur        integer  NOT NULL  ,
+	idtypeoccasion       integer  NOT NULL  ,
+	idcategorie          integer  NOT NULL  ,
+	idcouleur            integer  NOT NULL  ,
+	idmodele             integer  NOT NULL  ,
+	idmarque             integer  NOT NULL  ,
+	prix                 numeric(10,2)  NOT NULL  ,
+	pourcentagecommission numeric(10,2) DEFAULT 0 NOT NULL  ,
+	description          text  NOT NULL  ,
+	etatannonce          integer DEFAULT 0 NOT NULL  ,
+	dateheurecreation    timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
+	CONSTRAINT pk_annonces PRIMARY KEY ( idannonce )
+ );
 
-CREATE  TABLE etatannonces (
-                               idetatannonce        integer DEFAULT nextval('etatannonces_idetatannonce_seq'::regclass) NOT NULL  ,
-                               idannonce            integer  NOT NULL  ,
-                               typeetat             integer  NOT NULL  ,
-                               dateheureetat        timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
-                               idutilisateur        integer  NOT NULL  ,
-                               CONSTRAINT pk_etatannonces PRIMARY KEY ( idetatannonce )
-);
+CREATE  TABLE etatannonces ( 
+	idetatannonce        integer DEFAULT nextval('etatannonces_idetatannonce_seq'::regclass) NOT NULL  ,
+	idannonce            integer  NOT NULL  ,
+	typeetat             integer  NOT NULL  ,
+	dateheureetat        timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
+	idutilisateur        integer  NOT NULL  ,
+	CONSTRAINT pk_etatannonces PRIMARY KEY ( idetatannonce )
+ );
 
-CREATE  TABLE favoris (
-                          idfavoris            integer DEFAULT nextval('favoris_idfavoris_seq'::regclass) NOT NULL  ,
-                          idutilisateur        integer  NOT NULL  ,
-                          idannonce            integer  NOT NULL  ,
-                          CONSTRAINT pk_favoris PRIMARY KEY ( idfavoris )
-);
+CREATE  TABLE favoris ( 
+	idfavoris            integer DEFAULT nextval('favoris_idfavoris_seq'::regclass) NOT NULL  ,
+	idutilisateur        integer  NOT NULL  ,
+	idannonce            integer  NOT NULL  ,
+	CONSTRAINT pk_favoris PRIMARY KEY ( idfavoris )
+ );
 
-CREATE  TABLE photos (
-                         idphoto              integer DEFAULT nextval('photos_idphoto_seq'::regclass) NOT NULL  ,
-                         idannonce            integer  NOT NULL  ,
-                         repertoire           varchar(255)  NOT NULL  ,
-                         CONSTRAINT pk_photos PRIMARY KEY ( idphoto )
-);
+CREATE  TABLE photos ( 
+	idphoto              integer DEFAULT nextval('photos_idphoto_seq'::regclass) NOT NULL  ,
+	idannonce            integer  NOT NULL  ,
+	repertoire           varchar(255)  NOT NULL  ,
+	CONSTRAINT pk_photos PRIMARY KEY ( idphoto )
+ );
 
-CREATE  TABLE sessions (
-                           idsession            integer DEFAULT nextval('sessions_idsession_seq'::regclass) NOT NULL  ,
-                           idutilisateur        integer  NOT NULL  ,
-                           dateheurelogin       timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
-                           code                 varchar(255)  NOT NULL  ,
-                           isconnected          integer DEFAULT 1 NOT NULL  ,
-                           token                text  NOT NULL  ,
-                           CONSTRAINT pk_sessions PRIMARY KEY ( idsession )
-);
+CREATE  TABLE sessions ( 
+	idsession            integer DEFAULT nextval('sessions_idsession_seq'::regclass) NOT NULL  ,
+	idutilisateur        integer  NOT NULL  ,
+	dateheurelogin       timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
+	code                 varchar(255)  NOT NULL  ,
+	isconnected          integer DEFAULT 1 NOT NULL  ,
+	token                text  NOT NULL  ,
+	CONSTRAINT pk_sessions PRIMARY KEY ( idsession )
+ );
 
 ALTER TABLE annonces ADD CONSTRAINT fk_annonces_categories FOREIGN KEY ( idcategorie ) REFERENCES categories( idcategorie );
 
@@ -138,33 +138,33 @@ ALTER TABLE photos ADD CONSTRAINT fk_photos_annonces FOREIGN KEY ( idannonce ) R
 ALTER TABLE sessions ADD CONSTRAINT fk_sessions_utilisateurs FOREIGN KEY ( idutilisateur ) REFERENCES utilisateurs( idutilisateur );
 
 CREATE VIEW v_annonce_commission AS SELECT a.idannonce,
-                                           a.idutilisateur,
-                                           a.idtypeoccasion,
-                                           a.idcategorie,
-                                           a.idcouleur,
-                                           a.idmodele,
-                                           a.idmarque,
-                                           a.prix,
-                                           a.pourcentagecommission,
-                                           a.description,
-                                           a.etatannonce,
-                                           a.dateheurecreation,
-                                           e.typeetat,
-                                           e.dateheureetat,
-                                           e.idutilisateur AS idutilisateuretat,
-                                           (a.prix * (a.pourcentagecommission / (100)::numeric)) AS commission
-                                    FROM (annonces a
-                                        JOIN etatannonces e ON ((e.idannonce = a.idannonce)));
+    a.idutilisateur,
+    a.idtypeoccasion,
+    a.idcategorie,
+    a.idcouleur,
+    a.idmodele,
+    a.idmarque,
+    a.prix,
+    a.pourcentagecommission,
+    a.description,
+    a.etatannonce,
+    a.dateheurecreation,
+    e.typeetat,
+    e.dateheureetat,
+    e.idutilisateur AS idutilisateuretat,
+    (a.prix * (a.pourcentagecommission / (100)::numeric)) AS commission
+   FROM (annonces a
+     JOIN etatannonces e ON ((e.idannonce = a.idannonce)));
 
 CREATE VIEW v_chiffre_affaire_defaut AS SELECT sum(v_annonce_commission.commission) AS total_commission
-                                        FROM v_annonce_commission
-                                        WHERE ((v_annonce_commission.typeetat = 100) AND (v_annonce_commission.dateheureetat >= date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone)) AND (v_annonce_commission.dateheureetat <= ((date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval) - '1 day'::interval)));
+   FROM v_annonce_commission
+  WHERE ((v_annonce_commission.typeetat = 100) AND (v_annonce_commission.dateheureetat >= date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone)) AND (v_annonce_commission.dateheureetat <= ((date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval) - '1 day'::interval)));
 
 CREATE VIEW v_commission_defaut AS SELECT max(v_annonce_commission.commission) AS max_commission,
-                                          avg(v_annonce_commission.commission) AS moyenne_commission,
-                                          min(v_annonce_commission.commission) AS min_commission
-                                   FROM v_annonce_commission
-                                   WHERE ((v_annonce_commission.typeetat = 100) AND (v_annonce_commission.dateheureetat >= date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone)) AND (v_annonce_commission.dateheureetat <= ((date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval) - '1 day'::interval)));
+    avg(v_annonce_commission.commission) AS moyenne_commission,
+    min(v_annonce_commission.commission) AS min_commission
+   FROM v_annonce_commission
+  WHERE ((v_annonce_commission.typeetat = 100) AND (v_annonce_commission.dateheureetat >= date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone)) AND (v_annonce_commission.dateheureetat <= ((date_trunc('MONTH'::text, (CURRENT_DATE)::timestamp with time zone) + '1 mon'::interval) - '1 day'::interval)));
 
 INSERT INTO categories( nomcategorie ) VALUES ( 'Voitures de Luxe');
 INSERT INTO categories( nomcategorie ) VALUES ( 'Vehicules Electriques');
