@@ -25,6 +25,16 @@ public class AnnonceController {
         this.authService = authService;
     }
 
+    @GetMapping("/all/{idUtilisateur}")
+    public ResponseEntity<Reponse> getAllAnnonceByIdUtilisateur(@RequestHeader Map<String,String> headers, @PathVariable Integer idUtilisateur) {
+        try {
+            List<Annonce> favoris = annonceService.getAllAnnonceByIdUtilisateur(idUtilisateur);
+            return authService.secure(headers, favoris);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
     @GetMapping("/favoris/{idUtilisateur}")
     public ResponseEntity<Reponse> getFavoris(@RequestHeader Map<String,String> headers, @PathVariable Integer idUtilisateur) {
         try {
@@ -110,7 +120,7 @@ public class AnnonceController {
     public ResponseEntity<Reponse> getValidatedNonVendueAnnonces() {
         try {
             List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAllAnnoncesValidesNonVendues();
-            return ResponseEntity.ok(new Reponse("200","liste des annonces", allAnnoncesValidesNonVendues));
+            return ResponseEntity.ok(new Reponse("200","liste des annonces no login", allAnnoncesValidesNonVendues));
         } catch (Exception e) {
             return ResponseEntity.ok(new Reponse("500", e.getMessage()));
         }
