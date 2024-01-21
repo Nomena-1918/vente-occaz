@@ -1,29 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS "public";
-
-CREATE SEQUENCE annonces_idannonce_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE categories_idcategorie_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE couleurs_idcouleur_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE etatannonces_idetatannonce_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE favoris_idfavoris_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE marques_idmarque_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE modeles_idmodele_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE photos_idphoto_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE sessions_idsession_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE typeoccasions_idtypeoccasion_seq START WITH 1 INCREMENT BY 1;
-
-CREATE SEQUENCE utilisateurs_idutilisateur_seq START WITH 1 INCREMENT BY 1;
-
 CREATE  TABLE categories ( 
-	idcategorie          integer DEFAULT nextval('categories_idcategorie_seq'::regclass) NOT NULL  ,
+	idcategorie          serial NOT NULL  ,
 	nomcategorie         varchar(255)  NOT NULL  ,
 	CONSTRAINT pk_categories PRIMARY KEY ( idcategorie )
  );
@@ -33,31 +9,31 @@ CREATE  TABLE commission_defaut (
  );
 
 CREATE  TABLE couleurs ( 
-	idcouleur            integer DEFAULT nextval('couleurs_idcouleur_seq'::regclass) NOT NULL  ,
+	idcouleur            serial NOT NULL  ,
 	nomcouleur           varchar(255)  NOT NULL  ,
 	CONSTRAINT pk_couleurs PRIMARY KEY ( idcouleur )
  );
 
 CREATE  TABLE marques ( 
-	idmarque             integer DEFAULT nextval('marques_idmarque_seq'::regclass) NOT NULL  ,
+	idmarque             serial NOT NULL  ,
 	nommarque            varchar(255)  NOT NULL  ,
 	CONSTRAINT pk_marques PRIMARY KEY ( idmarque )
  );
 
 CREATE  TABLE modeles ( 
-	idmodele             integer DEFAULT nextval('modeles_idmodele_seq'::regclass) NOT NULL  ,
+	idmodele             serial NOT NULL  ,
 	nommodele            varchar(255)  NOT NULL  ,
 	CONSTRAINT pk_modeles PRIMARY KEY ( idmodele )
  );
 
 CREATE  TABLE typeoccasions ( 
-	idtypeoccasion       integer DEFAULT nextval('typeoccasions_idtypeoccasion_seq'::regclass) NOT NULL  ,
+	idtypeoccasion       serial NOT NULL  ,
 	nomtypeoccasion      varchar(255)  NOT NULL  ,
 	CONSTRAINT pk_typeoccasions PRIMARY KEY ( idtypeoccasion )
  );
 
 CREATE  TABLE utilisateurs ( 
-	idutilisateur        integer DEFAULT nextval('utilisateurs_idutilisateur_seq'::regclass) NOT NULL  ,
+	idutilisateur        serial NOT NULL  ,
 	email                varchar(255)  NOT NULL  ,
 	motdepasse           varchar(255)  NOT NULL  ,
 	isadmin              integer  NOT NULL  ,
@@ -65,7 +41,7 @@ CREATE  TABLE utilisateurs (
  );
 
 CREATE  TABLE annonces ( 
-	idannonce            integer DEFAULT nextval('annonces_idannonce_seq'::regclass) NOT NULL  ,
+	idannonce            serial NOT NULL  ,
 	idutilisateur        integer  NOT NULL  ,
 	idtypeoccasion       integer  NOT NULL  ,
 	idcategorie          integer  NOT NULL  ,
@@ -81,7 +57,7 @@ CREATE  TABLE annonces (
  );
 
 CREATE  TABLE etatannonces ( 
-	idetatannonce        integer DEFAULT nextval('etatannonces_idetatannonce_seq'::regclass) NOT NULL  ,
+	idetatannonce        serial NOT NULL  ,
 	idannonce            integer  NOT NULL  ,
 	typeetat             integer  NOT NULL  ,
 	dateheureetat        timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
@@ -90,21 +66,21 @@ CREATE  TABLE etatannonces (
  );
 
 CREATE  TABLE favoris ( 
-	idfavoris            integer DEFAULT nextval('favoris_idfavoris_seq'::regclass) NOT NULL  ,
+	idfavoris            serial NOT NULL  ,
 	idutilisateur        integer  NOT NULL  ,
 	idannonce            integer  NOT NULL  ,
 	CONSTRAINT pk_favoris PRIMARY KEY ( idfavoris )
  );
 
 CREATE  TABLE photos ( 
-	idphoto              integer DEFAULT nextval('photos_idphoto_seq'::regclass) NOT NULL  ,
+	idphoto              serial NOT NULL  ,
 	idannonce            integer  NOT NULL  ,
 	repertoire           varchar(255)  NOT NULL  ,
 	CONSTRAINT pk_photos PRIMARY KEY ( idphoto )
  );
 
 CREATE  TABLE sessions ( 
-	idsession            integer DEFAULT nextval('sessions_idsession_seq'::regclass) NOT NULL  ,
+	idsession            serial NOT NULL  ,
 	idutilisateur        integer  NOT NULL  ,
 	dateheurelogin       timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
 	code                 varchar(255)  NOT NULL  ,
@@ -191,7 +167,7 @@ INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Occasion Standard');
 INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Vente Flash');
 INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Liquidation');
 INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Promotion');
-INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Sp‚cial');
+INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Special');
 INSERT INTO utilisateurs( email, motdepasse, isadmin ) VALUES ( 'admin@gmail.com', '1234', 1);
 INSERT INTO utilisateurs( email, motdepasse, isadmin ) VALUES ( 'u1@gmail.com', '1234', 0);
 INSERT INTO utilisateurs( email, motdepasse, isadmin ) VALUES ( 'u2@gmail.com', '1234', 0);
@@ -216,23 +192,23 @@ INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/grG1hM
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 5, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
+-- INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 1, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 5, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
+-- INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 1, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 5, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
+-- INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
+-- INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO sessions( idutilisateur, dateheurelogin, code, isconnected, token ) VALUES ( 3, '2024-01-14 10:41:41 AM', '6898', 0, 'QM9aHtcaOr99oig1n3A+bjLDnN4w=B2QJA35UDXDLurE');
 INSERT INTO sessions( idutilisateur, dateheurelogin, code, isconnected, token ) VALUES ( 2, '2024-01-15 02:08:59 PM', '5375', 0, 'uMLL=GcNta+Wy8RkmqNEGyOPbCJkcHED484lSkfgoc0C');
