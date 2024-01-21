@@ -12,10 +12,22 @@ import org.voiture.venteoccaz.models.Annonce;
 @Repository
 public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
 
-        @Query("SELECT a, true FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur ORDER BY e.dateHeureEtat DESC")
+        @Query("SELECT a, true " +
+        "FROM Annonce a " +
+        "JOIN Favoris f ON a.idAnnonce = f.idAnnonce AND f.utilisateur.idUtilisateur = :idUtilisateur " +
+        "LEFT JOIN EtatAnnonce e ON a.idAnnonce = e.annonce.idAnnonce " +
+        "AND e.dateHeureEtat = (SELECT MAX(e2.dateHeureEtat) FROM EtatAnnonce e2 WHERE e2.annonce.idAnnonce = a.idAnnonce) " +
+        "WHERE a.proprietaire.idUtilisateur = :idUtilisateur " +
+        "ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAllAnnonceFavoris(@Param("idUtilisateur") Integer idUtilisateur);
 
-        @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE a.proprietaire.idUtilisateur = :idUtilisateur ORDER BY e.dateHeureEtat DESC")
+        @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL THEN true ELSE false END " +
+        "FROM Annonce a " +
+        "LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce AND f.utilisateur.idUtilisateur = :idUtilisateur " +
+        "LEFT JOIN EtatAnnonce e ON a.idAnnonce = e.annonce.idAnnonce " +
+        "AND e.dateHeureEtat = (SELECT MAX(e2.dateHeureEtat) FROM EtatAnnonce e2 WHERE e2.annonce.idAnnonce = a.idAnnonce) " +
+        "WHERE a.proprietaire.idUtilisateur = :idUtilisateur " +
+        "ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAllAnnonceByIdUtilisateur(@Param("idUtilisateur") Integer idUtilisateur);
 
         @Query("SELECT a, CASE WHEN f.idFavoris IS NOT NULL AND f.utilisateur.idUtilisateur = :idUtilisateur THEN true ELSE false END FROM Annonce a LEFT JOIN Favoris f ON a.idAnnonce = f.idAnnonce LEFT JOIN a.etats e WHERE e.typeEtat = 10 AND NOT EXISTS (SELECT 1 FROM a.etats e2 WHERE e2.typeEtat = 100) AND a.proprietaire.idUtilisateur = :idUtilisateur AND a.categorie.idCategorie = :idCategorie AND a.marque.idMarque = :idMarque AND a.modele.idModele = :idModele AND a.prix >= :prixMin AND a.prix <= :prixMax ORDER BY e.dateHeureEtat DESC")
