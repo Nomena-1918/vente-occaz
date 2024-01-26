@@ -73,6 +73,11 @@ public class GestionCritereController {
         return authService.secure(headers, couleurRepository.findAll());
     }
 
+    @GetMapping("marques")
+    public ResponseEntity<Reponse> readMarque(@RequestHeader Map<String,String> headers) {
+        return authService.secure(headers, marqueRepository.findAll());
+    }
+
     // READ NO AUTH
 
     @GetMapping("no-auth/marques")
