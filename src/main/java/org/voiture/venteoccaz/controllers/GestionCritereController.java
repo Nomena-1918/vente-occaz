@@ -75,25 +75,25 @@ public class GestionCritereController {
 
     // READ NO AUTH
 
-    @GetMapping("marques")
+    @GetMapping("no-auth/marques")
     public ResponseEntity<Reponse> readMarque() {
         return ResponseEntity.ok(new Reponse("200","liste des Marques no login", marqueRepository.findAll()));
     }
 
-    @GetMapping("categories")
+    @GetMapping("no-auth/categories")
     public ResponseEntity<Reponse> readCategorie() {
         return ResponseEntity.ok(new Reponse("200","liste des Categories no login", categorieRepository.findAll()));
     }
-    @GetMapping("modeles")
+    @GetMapping("no-auth/modeles")
     public ResponseEntity<Reponse> readModele() {
         return ResponseEntity.ok(new Reponse("200","liste des Modeles no login", modeleRepository.findAll()));
     }
-    @GetMapping("type-occasions")
+    @GetMapping("no-auth/type-occasions")
     public ResponseEntity<Reponse> readTypeOccasion() {
         return ResponseEntity.ok(new Reponse("200","liste des TypeOccasions no login", typeOccasionRepository.findAll()));
     }
 
-    @GetMapping("couleurs")
+    @GetMapping("no-auth/couleurs")
     public ResponseEntity<Reponse> readCouleur() {
         return ResponseEntity.ok(new Reponse("200","liste des Couleurs no login", couleurRepository.findAll()));
     }
