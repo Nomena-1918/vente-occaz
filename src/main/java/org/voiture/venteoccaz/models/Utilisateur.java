@@ -17,8 +17,9 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idutilisateur")
     Integer idUtilisateur;
+    @Column(name = "email", nullable = false)
     String email;
-    @Column(name = "motdepasse")
+    @Column(name = "motdepasse", nullable = false)
     String motDePasse;
     @Column(name = "isadmin")
     int isAdmin;

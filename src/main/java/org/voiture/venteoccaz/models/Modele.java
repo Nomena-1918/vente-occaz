@@ -17,7 +17,7 @@ public class Modele {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idmodele")
     Integer idModele;
-    @Column(name = "nommodele")
+    @Column(name = "nommodele", nullable = false)
     String nomModele;
     
 }

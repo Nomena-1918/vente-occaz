@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NonNull;
 
 @Entity
 @Data
@@ -17,7 +18,7 @@ public class Marque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idmarque")
     Integer idMarque;
-    @Column(name = "nommarque")
+    @Column(name = "nommarque", nullable = false)
     String nomMarque;
-    
+
 }

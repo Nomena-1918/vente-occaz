@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NonNull;
 
 @Entity
 @Data
@@ -17,7 +18,8 @@ public class Categorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idcategorie")
     Integer idCategorie;
-    @Column(name = "nomcategorie")
+
+    @Column(name = "nomcategorie", nullable = false)
     String nomCategorie;
     
 }

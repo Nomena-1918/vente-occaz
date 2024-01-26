@@ -1,6 +1,6 @@
 package org.voiture.venteoccaz.models;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,37 +8,34 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Data
-@Table(name = "favoris")
-public class Favoris {
-    
+@Table(name = "sessions")
+public class Session {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idfavoris")
-    Integer idFavoris;
+    @Column(name = "idsession")
+    Integer idSession;
 
     @ManyToOne
     @JoinColumn(name = "idutilisateur", nullable = false)
     Utilisateur utilisateur;
+    
+    @Column(name = "dateheurelogin")
+    LocalDateTime dateHeureLogin;
+    String code;
+    
+    @Column(name = "isconnected")
+    Integer isConnected;
+    
+    String token;
 
-    @ManyToMany
-    @JoinTable(
-        name = "favoris_annonces",
-        joinColumns = @JoinColumn(name = "idfavoris"),
-        inverseJoinColumns = @JoinColumn(name = "idannonce")
-    )
-    @Transient
-    List<Annonce> annonceFavorites;
 
-    @Column(name = "idannonce")
-    int idAnnonce;
-
+    
 }
