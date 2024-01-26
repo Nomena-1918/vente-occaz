@@ -73,8 +73,28 @@ public class GestionCritereController {
         return authService.secure(headers, couleurRepository.findAll());
     }
 
+    // READ NO AUTH
+
     @GetMapping("marques")
-    public ResponseEntity<Reponse> readMarque(@RequestHeader Map<String,String> headers) {
-        return authService.secure(headers, marqueRepository.findAll());
+    public ResponseEntity<Reponse> readMarque() {
+        return ResponseEntity.ok(new Reponse("200","liste des annonces no login", marqueRepository.findAll()));
+    }
+
+    @GetMapping("categories")
+    public ResponseEntity<Reponse> readCategorie() {
+        return ResponseEntity.ok(new Reponse("200","liste des annonces no login", categorieRepository.findAll()));
+    }
+    @GetMapping("modeles")
+    public ResponseEntity<Reponse> readModele() {
+        return ResponseEntity.ok(new Reponse("200","liste des annonces no login", modeleRepository.findAll()));
+    }
+    @GetMapping("type-occasions")
+    public ResponseEntity<Reponse> readTypeOccasion() {
+        return ResponseEntity.ok(new Reponse("200","liste des annonces no login", typeOccasionRepository.findAll()));
+    }
+
+    @GetMapping("couleurs")
+    public ResponseEntity<Reponse> readCouleur() {
+        return ResponseEntity.ok(new Reponse("200","liste des annonces no login", couleurRepository.findAll()));
     }
 }
