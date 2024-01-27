@@ -63,5 +63,4 @@ WHERE e.typeetat = 10
     FROM etatannonces e2
     WHERE e2.idannonce = a.idannonce AND e2.typeetat = 100
 )
-  AND a.idutilisateur != :idUtilisateur
 ORDER BY e.dateheureetat DESC;

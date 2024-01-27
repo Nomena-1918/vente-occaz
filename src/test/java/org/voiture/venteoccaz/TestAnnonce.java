@@ -32,4 +32,10 @@ public class TestAnnonce {
         var a = allAnnoncesValidesNonVendues;
     }
 
+    @Test
+    void testEtatFavoriNoFiltreUser() {
+        List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAnnonceEtatFavoriValidesNonVendues(1);
+        var a = allAnnoncesValidesNonVendues;
+    }
+
 }
