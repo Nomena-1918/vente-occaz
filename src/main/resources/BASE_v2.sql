@@ -191,7 +191,7 @@ INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Occasion Standard');
 INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Vente Flash');
 INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Liquidation');
 INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Promotion');
-INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Sp‚cial');
+INSERT INTO typeoccasions( nomtypeoccasion ) VALUES ( 'Spécial');
 INSERT INTO utilisateurs( email, motdepasse, isadmin ) VALUES ( 'admin@gmail.com', '1234', 1);
 INSERT INTO utilisateurs( email, motdepasse, isadmin ) VALUES ( 'u1@gmail.com', '1234', 0);
 INSERT INTO utilisateurs( email, motdepasse, isadmin ) VALUES ( 'u2@gmail.com', '1234', 0);
