@@ -23,6 +23,13 @@ public class TestAnnonce {
     @Test
     void testNoFiltre() {
         List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAllAnnoncesValidesNonVendues();
-        System.out.println(allAnnoncesValidesNonVendues);
+        var a = allAnnoncesValidesNonVendues;
     }
+
+    @Test
+    void testNoFiltreUser() {
+        List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAllAnnoncesValidesNonVendues(2);
+        var a = allAnnoncesValidesNonVendues;
+    }
+
 }
