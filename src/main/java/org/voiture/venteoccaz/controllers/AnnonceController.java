@@ -165,5 +165,16 @@ public class AnnonceController {
             return ResponseEntity.ok(new Reponse("500", e.getMessage()));
         }
     }
+
+    @GetMapping("/non-vendues-nofiltre-etat-favori/{idUtilisateur}")
+    public ResponseEntity<Reponse> getAnnonceEtatFavoriValidesNonVendues(@RequestHeader Map<String,String> headers, @PathVariable Integer idUtilisateur) {
+        try {
+            List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAnnonceEtatFavoriValidesNonVendues(idUtilisateur);
+            return authService.secure(headers, allAnnoncesValidesNonVendues);
+        } catch (Exception e) {
+            return ResponseEntity.ok(new Reponse("500", e.getMessage()));
+        }
+    }
+
 }
 

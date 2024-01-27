@@ -136,6 +136,10 @@ public class AnnonceService {
         return annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus();
     }
 
+    public List<Annonce> getAnnonceEtatFavoriValidesNonVendues(Integer idUtilisateur) {
+        return  getAnnonceWithFavoris(annonceRepository.getAnnonceEtatFavoriValidesNonVendues(idUtilisateur));
+    }
+
     public List<Annonce> getAnnonceWithFavoris(List<Object []> annoncesWithFavorisStatus) {
         List<Annonce> allAnnoncesValidesNonVendues =  new ArrayList<>();
         Annonce annonce = null;
