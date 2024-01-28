@@ -1,5 +1,6 @@
 package org.voiture.venteoccaz.services.authentification;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.Repositories.SessionRepository;
 import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
+import org.voiture.venteoccaz.Repositories.notification.UtilisateurFCMRepository;
 import org.voiture.venteoccaz.exception.AccessDeniedException;
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
+import org.voiture.venteoccaz.models.notification.UtilisateurFCM;
 import org.voiture.venteoccaz.util.CodeGenerator;
 import org.voiture.venteoccaz.util.TokenGenerator;
 
@@ -23,11 +26,13 @@ import java.util.Optional;
 public class AuthService {
     private final UtilisateurRepository utilisateurRepository;
     private final SessionRepository sessionRepository;
+    private final UtilisateurFCMRepository utilisateurFCMRepository;
 
     @Autowired
-    public AuthService(UtilisateurRepository utilisateurRepository, SessionRepository sessionRepository) {
+    public AuthService(UtilisateurRepository utilisateurRepository, SessionRepository sessionRepository, UtilisateurFCMRepository utilisateurFCMRepository) {
         this.utilisateurRepository = utilisateurRepository;
         this.sessionRepository = sessionRepository;
+        this.utilisateurFCMRepository = utilisateurFCMRepository;
     }
 
     public Optional<Utilisateur> isRegisteredAdmin(String email, String motDePasse) {
@@ -67,6 +72,7 @@ public class AuthService {
         if (session.isPresent()) {
             Session s = session.get();
             s.setIsConnected(0);
+            s.setDateHeureLogin(LocalDateTime.now());
             sessionRepository.save(s);
         }
         else
@@ -77,16 +83,31 @@ public class AuthService {
         return sessionRepository.findAllByUtilisateur(utilisateur.getIdUtilisateur());
     }
 
-    public Reponse authenticate(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+    @Transactional
+    public Reponse authenticate(Optional<Utilisateur> utilisateur, String tokenFcm) throws NoSuchAlgorithmException, InvalidKeyException {
         if (utilisateur.isEmpty()) {
             return new Reponse("403", "Utilisateur absent de la base de donnée");
         }
+        // Gestion session
         Optional<Session> session = getSessionFromUtilisateur(utilisateur.get());
 
         Session s = session.orElseGet(Session::new);
-        s = sessionRepository.save(setSessionActif(s, utilisateur.get()));
+        var sessionFinal  = sessionRepository.save(setSessionActif(s, utilisateur.get()));
 
-        return new Reponse("200", "Session de l'utilisateur", s);
+        // Gestion token FCM
+        Optional<UtilisateurFCM> utilisateurFCM = utilisateurFCMRepository.findUtilisateurFCMByUtilisateurAndTokenFcm(utilisateur.get().getIdUtilisateur(), tokenFcm);
+        if (utilisateurFCM.isEmpty()) {
+            UtilisateurFCM newUtilisateurTcmToken = new UtilisateurFCM();
+            newUtilisateurTcmToken.setUtilisateur(utilisateur.get());
+            newUtilisateurTcmToken.setTokenFcm(tokenFcm);
+            utilisateurFCMRepository.save(newUtilisateurTcmToken);
+        }
+
+        // Envoi notifications à tous les appareils de l'utilisateur (batch sendMessages)
+        // entre dernière date connexion et maintenant : s et sessionFinal
+        // ...
+
+        return new Reponse("200", "Session de l'utilisateur", sessionFinal);
     }
 
     private Session setSessionActif(Session s, Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {

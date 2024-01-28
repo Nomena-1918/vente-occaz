@@ -112,12 +112,13 @@ CREATE  TABLE sessions (
 	token                text  NOT NULL  ,
 	CONSTRAINT pk_sessions PRIMARY KEY ( idsession )
  );
-/*
+
 create table utilisateur_fcm(
     id serial primary key,
-    id_utilisateur
-)
-*/
+    id_utilisateur int not null references utilisateurs(idutilisateur),
+    token_fcm varchar(255) NOT NULL unique
+);
+
 ALTER TABLE utilisateurs ADD CONSTRAINT unique_email_mdp unique(email);
 
 ALTER TABLE annonces ADD CONSTRAINT fk_annonces_categories FOREIGN KEY ( idcategorie ) REFERENCES categories( idcategorie );

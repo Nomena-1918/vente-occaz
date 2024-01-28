@@ -9,6 +9,7 @@ import org.voiture.venteoccaz.Reponse.Reponse;
 import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
+import org.voiture.venteoccaz.models.notification.UtilisateurFCM;
 import org.voiture.venteoccaz.services.authentification.AuthService;
 
 import java.security.InvalidKeyException;
@@ -29,17 +30,18 @@ public class AuthController {
     }
 
     @PostMapping("/login-admin")
-    public ResponseEntity<Reponse> LoginAdmin(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
-        Optional<Utilisateur> user = authService.isRegisteredAdmin(utilisateur.getEmail(), utilisateur.getMotDePasse());
-        return getReponseResponseEntity(user);
+    public ResponseEntity<Reponse> LoginAdmin(@RequestBody UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
+        Optional<Utilisateur> user = authService.isRegistered(utilisateurFCM.getUtilisateur().getEmail(), utilisateurFCM.getUtilisateur().getMotDePasse());
+        return getReponseResponseEntity(user, utilisateurFCM.getTokenFcm());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Reponse> Login(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
-        System.out.println("utilisateur.getEmail() "+utilisateur.getEmail());
-        System.out.println("utilisateur.getMotDePasse() "+utilisateur.getMotDePasse());
-        Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
-        return getReponseResponseEntity(user);
+    public ResponseEntity<Reponse> Login(@RequestBody UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
+        System.out.println("utilisateurFCM.getUtilisateur().getEmail()  "+utilisateurFCM.getUtilisateur().getEmail());
+        System.out.println("utilisateurFCM.getUtilisateur().getMotDePasse() "+utilisateurFCM.getUtilisateur().getMotDePasse());
+        Optional<Utilisateur> user = authService.isRegistered(utilisateurFCM.getUtilisateur().getEmail(), utilisateurFCM.getUtilisateur().getMotDePasse());
+
+        return getReponseResponseEntity(user, utilisateurFCM.getTokenFcm());
     }
 
     @PostMapping("/login-by-code")
@@ -70,18 +72,18 @@ public class AuthController {
     }
 
     @PostMapping("/inscription")
-    public ResponseEntity<Reponse> Inscription(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
-        Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
+    public ResponseEntity<Reponse> Inscription(@RequestBody UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
+        Optional<Utilisateur> user = authService.isRegistered(utilisateurFCM.getUtilisateur().getEmail(), utilisateurFCM.getUtilisateur().getMotDePasse());
 
         if(user.isPresent())
             return new ResponseEntity<>(new Reponse("500", "Utilisateur déjà présent dans la base de donnée", null), HttpStatus.CONFLICT);
 
-        Utilisateur newUser = utilisateurRepository.save(utilisateur);
-        return getReponseResponseEntity(Optional.of(newUser));
+        Utilisateur newUser = utilisateurRepository.save(utilisateurFCM.getUtilisateur());
+        return getReponseResponseEntity(Optional.of(newUser), utilisateurFCM.getTokenFcm());
     }
 
-    private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
-        Reponse reponse = authService.authenticate(utilisateur);
+    private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur, String tokenFcm) throws NoSuchAlgorithmException, InvalidKeyException {
+        Reponse reponse = authService.authenticate(utilisateur, tokenFcm);
         HttpStatus httpStatus = switch (reponse.getCode()) {
             case "200" -> HttpStatus.OK;
             case "403" -> HttpStatus.FORBIDDEN;
