@@ -3,17 +3,7 @@ package org.voiture.venteoccaz.models;
 import java.util.List;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -50,7 +40,7 @@ public class Annonce {
     @JoinColumn(name = "idmarque", nullable = false)
     Marque marque;
 
-    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     // @JsonIgnore
     List<Photo> listePhotos;
     
@@ -59,7 +49,7 @@ public class Annonce {
     double pourcentageCommission;
     String description;
 
-    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<EtatAnnonce> etats;
 
     @Column(name = "etatannonce")

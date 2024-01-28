@@ -46,10 +46,10 @@ public class AuthController {
     public ResponseEntity<Reponse> LoginByCode(@RequestParam String code) {
         Optional<Session> session = authService.isRegisteredCode(code);
         return session.map(
-                value -> new ResponseEntity<>(new Reponse("200", "Connecté !", value), HttpStatus.OK)
+                    value -> new ResponseEntity<>(new Reponse("200", "Connecté !", value), HttpStatus.OK)
                 )
                 .orElseGet(
-                        () -> new ResponseEntity<>(new Reponse("403", "Non authentifié !", null), HttpStatus.FORBIDDEN)
+                    () -> new ResponseEntity<>(new Reponse("403", "Non authentifié !", null), HttpStatus.FORBIDDEN)
                 );
     }
 
