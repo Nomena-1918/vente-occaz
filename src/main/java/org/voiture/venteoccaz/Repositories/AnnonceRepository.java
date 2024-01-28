@@ -17,7 +17,6 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Integer> {
         "JOIN Favoris f ON a.idAnnonce = f.idAnnonce AND f.utilisateur.idUtilisateur = :idUtilisateur " +
         "LEFT JOIN EtatAnnonce e ON a.idAnnonce = e.annonce.idAnnonce " +
         "AND e.dateHeureEtat = (SELECT MAX(e2.dateHeureEtat) FROM EtatAnnonce e2 WHERE e2.annonce.idAnnonce = a.idAnnonce) " +
-        "WHERE a.proprietaire.idUtilisateur = :idUtilisateur " +
         "ORDER BY e.dateHeureEtat DESC")
         List<Object[]> getAllAnnonceFavoris(@Param("idUtilisateur") Integer idUtilisateur);
 
