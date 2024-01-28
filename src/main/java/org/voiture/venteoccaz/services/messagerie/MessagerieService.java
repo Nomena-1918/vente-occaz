@@ -1,5 +1,6 @@
 package org.voiture.venteoccaz.services.messagerie;
 
+import jakarta.transaction.Transactional;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,7 @@ public class MessagerieService {
 
 
     // Envoyer message
+    @Transactional
     public Messagerie envoyerMessage(Message message, ObjectId messagerieId) throws Exception {
 
         // Retrieve the messagerie

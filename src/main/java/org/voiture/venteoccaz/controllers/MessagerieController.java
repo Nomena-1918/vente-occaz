@@ -108,6 +108,10 @@ public class MessagerieController {
             if (messagerie.isPresent()) {
                 Message mess = new Message(mongoUtilisateurEnvoyeur, mongoUtilisateurReceveur, message, LocalDateTime.now());
                 messagerieService.envoyerMessage(mess, messagerie.get().getId());
+
+                // Envoi notifications (extrait du message) à tous les appareils de l'utilisateur récepteur (batch sendMessages)
+                // ...
+
                 return new ResponseEntity<>(new Reponse("200", "Message envoyé", message), HttpStatus.OK);
             }
             else
