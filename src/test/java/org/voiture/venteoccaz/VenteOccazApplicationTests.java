@@ -43,7 +43,7 @@ class VenteOccazApplicationTests {
         System.out.println("Hello World !");
     }
 
-    /*
+
     // Contact :
     // u1 avec u2
     @Test
@@ -235,6 +235,5 @@ class VenteOccazApplicationTests {
         messageRepository.deleteAll();
         System.out.println("=============\n DELETED ! \n=============");
     }
-*/
 
 }

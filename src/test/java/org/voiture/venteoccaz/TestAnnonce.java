@@ -19,7 +19,7 @@ public class TestAnnonce {
     public TestAnnonce(AnnonceService annonceService) {
         this.annonceService = annonceService;
     }
-/*
+
     @Test
     void testNoFiltre() {
         List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAllAnnoncesValidesNonVendues();
@@ -37,5 +37,4 @@ public class TestAnnonce {
         List<Annonce> allAnnoncesValidesNonVendues = annonceService.getAnnonceEtatFavoriValidesNonVendues(1);
         var a = allAnnoncesValidesNonVendues;
     }
-*/
 }

@@ -112,10 +112,13 @@ CREATE  TABLE sessions (
 	token                text  NOT NULL  ,
 	CONSTRAINT pk_sessions PRIMARY KEY ( idsession )
  );
-
-ALTER TABLE utilisateurs ADD CONSTRAINT unique_email unique(email);
-
-ALTER TABLE utilisateurs ADD CONSTRAINT unique_mdp unique(motdepasse);
+/*
+create table utilisateur_fcm(
+    id serial primary key,
+    id_utilisateur
+)
+*/
+ALTER TABLE utilisateurs ADD CONSTRAINT unique_email_mdp unique(email);
 
 ALTER TABLE annonces ADD CONSTRAINT fk_annonces_categories FOREIGN KEY ( idcategorie ) REFERENCES categories( idcategorie );
 
@@ -221,23 +224,19 @@ INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/grG1hM
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 5, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/grG1hMS/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 1, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 5, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/19QQtHK/view-3d-car-23-2150796894.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 1, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 5, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/D7Sn2pN/silver-sedan-car-53876-84522.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
-INSERT INTO photos( idannonce, repertoire ) VALUES ( 8, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO sessions( idutilisateur, dateheurelogin, code, isconnected, token ) VALUES ( 3, '2024-01-14 10:41:41 AM', '6898', 0, 'QM9aHtcaOr99oig1n3A+bjLDnN4w=B2QJA35UDXDLurE');
 INSERT INTO sessions( idutilisateur, dateheurelogin, code, isconnected, token ) VALUES ( 2, '2024-01-15 02:08:59 PM', '5375', 0, 'uMLL=GcNta+Wy8RkmqNEGyOPbCJkcHED484lSkfgoc0C');
