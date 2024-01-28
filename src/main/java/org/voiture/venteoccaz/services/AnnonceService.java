@@ -115,14 +115,12 @@ public class AnnonceService {
         }
         
         List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus(idUtilisateur, idCategorie, idMarque, idModele, prixMin, prixMax);
-        List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
-        return allAnnoncesValidesNonVendues; 
+        return getAnnonceWithFavoris(annoncesWithFavorisStatus);
     }
 
     public List<Annonce> getAllAnnoncesValidesNonVendues(Integer idUtilisateur) {
-        List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus(idUtilisateur);
-        List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
-        return allAnnoncesValidesNonVendues;
+        List<Object[]> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus(idUtilisateur);
+        return getAnnonceWithFavoris(annoncesWithFavorisStatus);
     }
 
     public List<Annonce> getAllAnnoncesValidesNonVendues(Integer idCategorie,Integer idMarque,Integer idModele,Double prixMin, Double prixMax) {
@@ -131,16 +129,15 @@ public class AnnonceService {
         }
         
         List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus(idCategorie, idMarque, idModele, prixMin, prixMax);
-        List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
-        return allAnnoncesValidesNonVendues; 
+        return getAnnonceWithFavoris(annoncesWithFavorisStatus);
     }
 
     public List<Annonce> getAllAnnoncesValidesNonVendues() {
-        List<Object []> annoncesWithFavorisStatus = annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus();
-        // System.out.println(">>>>>>>>>>>> "+annoncesWithFavorisStatus.size());
-        List<Annonce> allAnnoncesValidesNonVendues = getAnnonceWithFavoris(annoncesWithFavorisStatus);
-        // System.out.println(">>>>>>>>>>>> "+annoncesWithFavorisStatus.size());
-        return allAnnoncesValidesNonVendues;
+        return annonceRepository.getAnnoncesValideNonVenduWithFavorisStatus();
+    }
+
+    public List<Annonce> getAnnonceEtatFavoriValidesNonVendues(Integer idUtilisateur) {
+        return  getAnnonceWithFavoris(annonceRepository.getAnnonceEtatFavoriValidesNonVendues(idUtilisateur));
     }
 
     public List<Annonce> getAnnonceWithFavoris(List<Object []> annoncesWithFavorisStatus) {
