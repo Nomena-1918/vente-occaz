@@ -13,7 +13,7 @@ public class UtilisateurFCM {
     private Integer id;
 
     @ManyToOne
-    @Column(name = "id_utilisateur")
+    @JoinColumn(name = "id_utilisateur")
     private Utilisateur utilisateur;
 
     @Column(name = "token_fcm")
