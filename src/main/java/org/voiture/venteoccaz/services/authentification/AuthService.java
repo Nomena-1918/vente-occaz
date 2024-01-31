@@ -83,6 +83,21 @@ public class AuthService {
         return sessionRepository.findAllByUtilisateur(utilisateur.getIdUtilisateur());
     }
 
+
+    @Transactional
+    public Reponse authenticateUser(Optional<Utilisateur> utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+        if (utilisateur.isEmpty()) {
+            return new Reponse("403", "Utilisateur absent de la base de donnée");
+        }
+        // Gestion session
+        Optional<Session> session = getSessionFromUtilisateur(utilisateur.get());
+
+        Session s = session.orElseGet(Session::new);
+        var sessionFinal  = sessionRepository.save(setSessionActif(s, utilisateur.get()));
+
+        return new Reponse("200", "Session de l'utilisateur", sessionFinal);
+    }
+
     @Transactional
     public Reponse authenticate(Optional<Utilisateur> utilisateur, String tokenFcm) throws NoSuchAlgorithmException, InvalidKeyException {
         if (utilisateur.isEmpty()) {
