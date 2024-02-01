@@ -1,21 +1,19 @@
 package org.voiture.venteoccaz.services;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-import org.voiture.venteoccaz.Repositories.AnnonceRepository;
-import org.voiture.venteoccaz.Repositories.CategorieRepository;
-import org.voiture.venteoccaz.Repositories.CouleurRepository;
-import org.voiture.venteoccaz.Repositories.EtatAnnonceRepository;
-import org.voiture.venteoccaz.Repositories.FavorisRepository;
-import org.voiture.venteoccaz.Repositories.MarqueRepository;
-import org.voiture.venteoccaz.Repositories.ModeleRepository;
-import org.voiture.venteoccaz.Repositories.TypeOccasionRepository;
-import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
+import org.voiture.venteoccaz.repositories.AnnonceRepository;
+import org.voiture.venteoccaz.repositories.CategorieRepository;
+import org.voiture.venteoccaz.repositories.CouleurRepository;
+import org.voiture.venteoccaz.repositories.EtatAnnonceRepository;
+import org.voiture.venteoccaz.repositories.FavorisRepository;
+import org.voiture.venteoccaz.repositories.MarqueRepository;
+import org.voiture.venteoccaz.repositories.ModeleRepository;
+import org.voiture.venteoccaz.repositories.TypeOccasionRepository;
+import org.voiture.venteoccaz.repositories.UtilisateurRepository;
 import org.voiture.venteoccaz.models.Statistique;
 
 import jakarta.persistence.EntityManager;

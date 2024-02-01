@@ -25,3 +25,10 @@ spring:
 custom:
   token:
     key: JbjaF2@tV$
+
+# Firebase Credentials
+gcp:
+  firebase:
+    service-account: classpath:firebase/carapp-1b62d-firebase-adminsdk-hn1bo-5bd3650983.json
+  notifications:
+    taille-max: 50

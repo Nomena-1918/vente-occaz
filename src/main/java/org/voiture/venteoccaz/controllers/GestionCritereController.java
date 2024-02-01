@@ -3,8 +3,8 @@ package org.voiture.venteoccaz.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.voiture.venteoccaz.Reponse.Reponse;
-import org.voiture.venteoccaz.Repositories.*;
+import org.voiture.venteoccaz.reponse.Reponse;
+import org.voiture.venteoccaz.repositories.*;
 import org.voiture.venteoccaz.models.*;
 import org.voiture.venteoccaz.services.authentification.AuthService;
 

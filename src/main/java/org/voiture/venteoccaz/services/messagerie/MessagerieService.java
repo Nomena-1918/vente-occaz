@@ -4,22 +4,19 @@ import jakarta.transaction.Transactional;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.voiture.venteoccaz.Repositories.mongodb.*;
-import org.voiture.venteoccaz.models.Utilisateur;
+import org.voiture.venteoccaz.repositories.mongodb.*;
 import org.voiture.venteoccaz.models.mongodb.Message;
 import org.voiture.venteoccaz.models.mongodb.Messagerie;
 import org.voiture.venteoccaz.models.mongodb.MongoUtilisateur;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
 public class MessagerieService {
-
     private final MessagerieRepository messagerieRepository;
     private final MessageRepository messageRepository;
 

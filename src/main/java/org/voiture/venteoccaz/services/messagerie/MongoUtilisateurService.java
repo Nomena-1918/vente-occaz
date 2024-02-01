@@ -2,8 +2,8 @@ package org.voiture.venteoccaz.services.messagerie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
-import org.voiture.venteoccaz.Repositories.mongodb.MongoUtilisateurRepository;
+import org.voiture.venteoccaz.repositories.UtilisateurRepository;
+import org.voiture.venteoccaz.repositories.mongodb.MongoUtilisateurRepository;
 import org.voiture.venteoccaz.models.Utilisateur;
 import org.voiture.venteoccaz.models.mongodb.MongoUtilisateur;
 

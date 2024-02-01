@@ -2,7 +2,7 @@ package org.voiture.venteoccaz.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.voiture.venteoccaz.Repositories.*;
+import org.voiture.venteoccaz.repositories.*;
 import org.voiture.venteoccaz.models.*;
 
 import java.util.List;

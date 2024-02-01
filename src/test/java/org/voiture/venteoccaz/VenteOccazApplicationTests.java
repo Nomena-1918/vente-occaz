@@ -1,22 +1,25 @@
 package org.voiture.venteoccaz;
 
+import com.google.firebase.messaging.BatchResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
-import org.voiture.venteoccaz.Repositories.mongodb.MessageRepository;
-import org.voiture.venteoccaz.Repositories.mongodb.MessagerieRepository;
-import org.voiture.venteoccaz.Repositories.mongodb.MongoUtilisateurRepository;
+import org.voiture.venteoccaz.repositories.UtilisateurRepository;
+import org.voiture.venteoccaz.repositories.mongodb.MessageRepository;
+import org.voiture.venteoccaz.repositories.mongodb.MessagerieRepository;
+import org.voiture.venteoccaz.repositories.mongodb.MongoUtilisateurRepository;
 import org.voiture.venteoccaz.models.mongodb.Message;
 import org.voiture.venteoccaz.models.mongodb.Messagerie;
 import org.voiture.venteoccaz.models.mongodb.MongoUtilisateur;
 import org.voiture.venteoccaz.services.messagerie.MessagerieService;
 import org.voiture.venteoccaz.services.messagerie.MongoUtilisateurService;
+import org.voiture.venteoccaz.services.notification.FirebaseMessagingService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -27,15 +30,17 @@ class VenteOccazApplicationTests {
     private final MongoUtilisateurService mongoUtilisateurService;
     private final MessageRepository messageRepository;
     private final MongoUtilisateurRepository mongoUtilisateurRepository;
+    private final FirebaseMessagingService firebaseMessagingService;
 
     @Autowired
-    public VenteOccazApplicationTests(UtilisateurRepository utilisateurRepository, MessagerieRepository messagerieRepository, MessagerieService messagerieService, MongoUtilisateurService mongoUtilisateurService, MessageRepository messageRepository, MongoUtilisateurRepository mongoUtilisateurRepository) {
+    public VenteOccazApplicationTests(UtilisateurRepository utilisateurRepository, MessagerieRepository messagerieRepository, MessagerieService messagerieService, MongoUtilisateurService mongoUtilisateurService, MessageRepository messageRepository, MongoUtilisateurRepository mongoUtilisateurRepository, FirebaseMessagingService firebaseMessagingService) {
         this.utilisateurRepository = utilisateurRepository;
         this.messagerieRepository = messagerieRepository;
         this.messagerieService = messagerieService;
         this.mongoUtilisateurService = mongoUtilisateurService;
         this.messageRepository = messageRepository;
         this.mongoUtilisateurRepository = mongoUtilisateurRepository;
+        this.firebaseMessagingService = firebaseMessagingService;
     }
 
     @Test
@@ -215,11 +220,47 @@ class VenteOccazApplicationTests {
             m = messagerieService.envoyerMessage(message, messagerie.get().getId());
 
 
-
         messagerie = messagerieService.getEchanges(u2, u1);
         message = new Message(u1, u2, "Parfait 🙂, au plaisir de vous rencontrer", LocalDateTime.now());
         if (messagerie.isPresent())
             m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+
+    }
+
+
+    // Message :
+    // u2 <-> u3
+    @Test
+    void envoyerMessageTestNotifs() throws Exception {
+        int id = 3;
+        MongoUtilisateur u2 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            u2  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
+
+        id = 4;
+        MongoUtilisateur u3 = null;
+        if (utilisateurRepository.findById(id).isPresent())
+            u3  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
+
+        var mess = messagerieService.ajouterContact(u2, u3);
+
+        assert u3 != null;
+        assert u2 != null;
+        var messagerie = messagerieService.getEchanges(u2, u3);
+        Message message = new Message(u2, u3, "Bonjour u3 c'est u2, tu devras recevoir la notif là", LocalDateTime.now());
+        Messagerie m = null;
+        if (messagerie.isPresent()) {
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+            Optional<BatchResponse> b = firebaseMessagingService.sendNotifications(message);
+        }
+
+        messagerie = messagerieService.getEchanges(u2, u3);
+        message = new Message(u3, u2, "Ouais bien reçu t'inquietes. Salut u2, comment ca va ?", LocalDateTime.now());
+        if (messagerie.isPresent()) {
+            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+            Optional<BatchResponse> b = firebaseMessagingService.sendNotifications(message);
+        }
+
 
     }
 

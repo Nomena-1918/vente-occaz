@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.voiture.venteoccaz.Reponse.Reponse;
+import org.voiture.venteoccaz.reponse.Reponse;
 
-import org.voiture.venteoccaz.Repositories.UtilisateurRepository;
+import org.voiture.venteoccaz.repositories.UtilisateurRepository;
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
-import org.voiture.venteoccaz.models.notification.UtilisateurFCM;
+import org.voiture.venteoccaz.models.firebase.UtilisateurFCM;
 import org.voiture.venteoccaz.services.authentification.AuthService;
 
 import java.security.InvalidKeyException;
