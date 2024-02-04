@@ -26,13 +26,11 @@ import java.util.Optional;
 public class AuthService {
     private final UtilisateurRepository utilisateurRepository;
     private final SessionRepository sessionRepository;
-    private final UtilisateurFCMRepository utilisateurFCMRepository;
 
     @Autowired
-    public AuthService(UtilisateurRepository utilisateurRepository, SessionRepository sessionRepository, UtilisateurFCMRepository utilisateurFCMRepository) {
+    public AuthService(UtilisateurRepository utilisateurRepository, SessionRepository sessionRepository) {
         this.utilisateurRepository = utilisateurRepository;
         this.sessionRepository = sessionRepository;
-        this.utilisateurFCMRepository = utilisateurFCMRepository;
     }
 
     public Optional<Utilisateur> isRegisteredAdmin(String email, String motDePasse) {
@@ -79,6 +77,12 @@ public class AuthService {
             throw new RuntimeException("- Token not found -");
     }
 
+    // v2
+    public Optional<Session> getSessionFromUtilisateurTokenFcm(UtilisateurFCM utilisateurFCM) {
+        return sessionRepository.findAllByUtilisateurTokenFcm(utilisateurFCM.getUtilisateur().getIdUtilisateur(), utilisateurFCM.getTokenFcm());
+    }
+
+    // v1
     public Optional<Session> getSessionFromUtilisateur(Utilisateur utilisateur) {
         return sessionRepository.findAllByUtilisateur(utilisateur.getIdUtilisateur());
     }
@@ -99,24 +103,13 @@ public class AuthService {
     }
 
     @Transactional
-    public Reponse authenticate(Optional<Utilisateur> utilisateur, String tokenFcm) throws NoSuchAlgorithmException, InvalidKeyException {
-        if (utilisateur.isEmpty()) {
-            return new Reponse("403", "Utilisateur absent de la base de donnée");
-        }
+    public Reponse authenticate(UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
         // Gestion session
-        Optional<Session> session = getSessionFromUtilisateur(utilisateur.get());
+        Optional<Session> session = getSessionFromUtilisateurTokenFcm(utilisateurFCM);
 
+        // Gestion session token FCM
         Session s = session.orElseGet(Session::new);
-        var sessionFinal  = sessionRepository.save(setSessionActif(s, utilisateur.get()));
-
-        // Gestion token FCM
-        Optional<UtilisateurFCM> utilisateurFCM = utilisateurFCMRepository.findUtilisateurFCMByUtilisateurAndTokenFcm(utilisateur.get().getIdUtilisateur(), tokenFcm);
-        if (utilisateurFCM.isEmpty()) {
-            UtilisateurFCM newUtilisateurTcmToken = new UtilisateurFCM();
-            newUtilisateurTcmToken.setUtilisateur(utilisateur.get());
-            newUtilisateurTcmToken.setTokenFcm(tokenFcm);
-            utilisateurFCMRepository.save(newUtilisateurTcmToken);
-        }
+        var sessionFinal  = sessionRepository.save(setSessionActifFcm(s, utilisateurFCM));
 
         // Envoi notifications à tous les appareils de l'utilisateur (batch sendMessages)
         // entre dernière date connexion et maintenant : s et sessionFinal
@@ -125,7 +118,8 @@ public class AuthService {
         return new Reponse("200", "Session de l'utilisateur", sessionFinal);
     }
 
-    private Session setSessionActif(Session s, Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
+    // v1
+    private Session setSessionActif(Session s, Utilisateur utilisateur, ) throws NoSuchAlgorithmException, InvalidKeyException {
         s.setUtilisateur(utilisateur);
         s.setIsConnected(1);
         s.setDateHeureLogin(LocalDateTime.now());
@@ -137,6 +131,22 @@ public class AuthService {
         }
         s.setCode(code);
         
+        return s;
+    }
+
+    // v2
+    private Session setSessionActifFcm(Session s, UtilisateurFCM utilisateurFcm) throws NoSuchAlgorithmException, InvalidKeyException {
+        s.setUtilisateur(utilisateurFcm.getUtilisateur());
+        s.setIsConnected(1);
+        s.setDateHeureLogin(LocalDateTime.now());
+        s.setToken(TokenGenerator.getToken(utilisateurFcm.getUtilisateur().getEmail()));
+        s.setTokenFcm(utilisateurFcm.getTokenFcm());
+        String code = CodeGenerator.getCode();
+        while (sessionRepository.findAllByCodeConnected(code).isPresent()) {
+            code = CodeGenerator.getCode();
+        }
+        s.setCode(code);
+
         return s;
     }
 

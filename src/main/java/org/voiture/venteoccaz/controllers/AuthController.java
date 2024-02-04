@@ -30,28 +30,11 @@ public class AuthController {
         this.utilisateurRepository = utilisateurRepository;
     }
 
-    @PostMapping("/v2/login-admin")
-    public ResponseEntity<Reponse> LoginAdmin(@RequestBody UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
-        Optional<Utilisateur> user = authService.isRegisteredAdmin(utilisateurFCM.getUtilisateur().getEmail(), utilisateurFCM.getUtilisateur().getMotDePasse());
-        return getReponseResponseEntity(user, utilisateurFCM.getTokenFcm());
-    }
-
     @PostMapping("/v1/login-admin")
     public ResponseEntity<Reponse> LoginAdminUser(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
         Optional<Utilisateur> user = authService.isRegisteredAdmin(utilisateur.getEmail(), utilisateur.getMotDePasse());
         return getReponseResponseEntityUser(user);
     }
-
-
-    @PostMapping("/v2/login")
-    public ResponseEntity<Reponse> Login(@RequestBody UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
-        System.out.println("utilisateurFCM.getUtilisateur().getEmail()  "+utilisateurFCM.getUtilisateur().getEmail());
-        System.out.println("utilisateurFCM.getUtilisateur().getMotDePasse() "+utilisateurFCM.getUtilisateur().getMotDePasse());
-        Optional<Utilisateur> user = authService.isRegistered(utilisateurFCM.getUtilisateur().getEmail(), utilisateurFCM.getUtilisateur().getMotDePasse());
-
-        return getReponseResponseEntity(user, utilisateurFCM.getTokenFcm());
-    }
-
 
     @PostMapping("/v1/login")
     public ResponseEntity<Reponse> LoginUser(@RequestBody Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -60,6 +43,19 @@ public class AuthController {
         Optional<Utilisateur> user = authService.isRegistered(utilisateur.getEmail(), utilisateur.getMotDePasse());
 
         return getReponseResponseEntityUser(user);
+    }
+
+    @PostMapping("/v2/login")
+    public ResponseEntity<Reponse> Login(@RequestBody UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
+        System.out.println("utilisateurFCM.getUtilisateur().getEmail()  "+utilisateurFCM.getUtilisateur().getEmail());
+        System.out.println("utilisateurFCM.getUtilisateur().getMotDePasse() "+utilisateurFCM.getUtilisateur().getMotDePasse());
+        Optional<Utilisateur> user = authService.isRegistered(utilisateurFCM.getUtilisateur().getEmail(), utilisateurFCM.getUtilisateur().getMotDePasse());
+
+        if (user.isEmpty()) {
+            return new ResponseEntity<>(new Reponse("403", "Utilisateur absent de la base de donnée"), HttpStatus.FORBIDDEN);
+        }
+
+        return getReponseResponseEntity(utilisateurFCM);
     }
 
     @PostMapping("/v1/login-by-code")
@@ -107,13 +103,13 @@ public class AuthController {
         if(user.isPresent())
             return new ResponseEntity<>(new Reponse("500", "Utilisateur déjà présent dans la base de donnée", null), HttpStatus.CONFLICT);
 
-        Utilisateur newUser = utilisateurRepository.save(utilisateurFCM.getUtilisateur());
-        return getReponseResponseEntity(Optional.of(newUser), utilisateurFCM.getTokenFcm());
+        utilisateurRepository.save(utilisateurFCM.getUtilisateur());
+        return getReponseResponseEntity(utilisateurFCM);
     }
 
     // Pour v2
-    private ResponseEntity<Reponse> getReponseResponseEntity(Optional<Utilisateur> utilisateur, String tokenFcm) throws NoSuchAlgorithmException, InvalidKeyException {
-        Reponse reponse = authService.authenticate(utilisateur, tokenFcm);
+    private ResponseEntity<Reponse> getReponseResponseEntity(UtilisateurFCM utilisateurFCM) throws NoSuchAlgorithmException, InvalidKeyException {
+        Reponse reponse = authService.authenticate(utilisateurFCM);
         HttpStatus httpStatus = switch (reponse.getCode()) {
             case "200" -> HttpStatus.OK;
             case "403" -> HttpStatus.FORBIDDEN;
