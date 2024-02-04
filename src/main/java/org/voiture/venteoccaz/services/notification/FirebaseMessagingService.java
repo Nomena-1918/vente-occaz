@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.voiture.venteoccaz.models.firebase.Notification;
 import org.voiture.venteoccaz.models.mongodb.Message;
-import org.voiture.venteoccaz.repositories.notification.UtilisateurFCMRepository;
+import org.voiture.venteoccaz.repositories.SessionRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,21 +17,21 @@ import static org.voiture.venteoccaz.utils.StringUtils.*;
 
 @Service
 public class FirebaseMessagingService {
-    private final UtilisateurFCMRepository utilisateurFCMRepository;
     private final FirebaseMessaging firebaseMessaging;
     private final ObjectMapper objectMapper;
+    private final SessionRepository sessionRepository;
 
     @Value("${gcp.notifications.taille-max}")
     private final int tailleMaxNotif = 50;
     @Autowired
-    public FirebaseMessagingService(UtilisateurFCMRepository utilisateurFCMRepository, FirebaseMessaging firebaseMessaging, ObjectMapper objectMapper) {
-        this.utilisateurFCMRepository = utilisateurFCMRepository;
+    public FirebaseMessagingService(FirebaseMessaging firebaseMessaging, ObjectMapper objectMapper, SessionRepository sessionRepository) {
         this.firebaseMessaging = firebaseMessaging;
         this.objectMapper = objectMapper;
+        this.sessionRepository = sessionRepository;
     }
 
     public Optional<BatchResponse> sendNotifications(Message message) throws FirebaseMessagingException, JsonProcessingException {
-        Optional<List<String>> listToken = utilisateurFCMRepository.findTokenFcmByUtilisateur(message.getRecepteur().getIdUtilisateur());
+        Optional<List<String>> listToken = sessionRepository.findTokenFcmByUtilisateur(message.getRecepteur().getIdUtilisateur());
         MulticastMessage msg;
 
         if (listToken.isPresent()) {
