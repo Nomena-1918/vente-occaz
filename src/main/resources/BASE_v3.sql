@@ -234,5 +234,3 @@ INSERT INTO photos( idannonce, repertoire ) VALUES ( 2, 'https://i.ibb.co/zRwSSY
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 3, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 4, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
 INSERT INTO photos( idannonce, repertoire ) VALUES ( 7, 'https://i.ibb.co/zRwSSYd/white-offroader-jeep-parking-114579-4007.jpg');
-INSERT INTO sessions( idutilisateur, dateheurelogin, code, isconnected, token ) VALUES ( 3, '2024-01-14 10:41:41 AM', '6898', 0, 'QM9aHtcaOr99oig1n3A+bjLDnN4w=B2QJA35UDXDLurE');
-INSERT INTO sessions( idutilisateur, dateheurelogin, code, isconnected, token ) VALUES ( 2, '2024-01-15 02:08:59 PM', '5375', 0, 'uMLL=GcNta+Wy8RkmqNEGyOPbCJkcHED484lSkfgoc0C');

@@ -33,9 +33,10 @@ public class Session {
     
     @Column(name = "isconnected")
     Integer isConnected;
-    
+
+    @Column(name = "token")
     String token;
 
-
-    
+    @Column(name = "token_fcm")
+    String tokenFcm;
 }
