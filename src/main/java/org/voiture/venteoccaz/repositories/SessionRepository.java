@@ -23,6 +23,6 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
     @Query("SELECT s FROM Session s WHERE s.utilisateur.idUtilisateur = :idUtilisateur and s.tokenFcm = :tokenFcm")
     Optional<Session> findAllByUtilisateurTokenFcm(Integer idUtilisateur, String tokenFcm);
 
-    @Query("SELECT s.tokenFcm FROM Session s WHERE s.utilisateur.idUtilisateur = :idUtilisateur")
+    @Query("SELECT s.tokenFcm FROM Session s WHERE s.utilisateur.idUtilisateur = :idUtilisateur and s.isConnected = 1")
     Optional<List<String>> findTokenFcmByUtilisateur(Integer idUtilisateur);
 }
