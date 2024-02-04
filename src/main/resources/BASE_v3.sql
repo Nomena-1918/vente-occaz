@@ -110,7 +110,7 @@ CREATE  TABLE sessions (
 	code                 varchar(255)  NOT NULL  ,
 	isconnected          integer DEFAULT 1 NOT NULL  ,
 	token                text  NOT NULL  ,
-    token_fcm                text  NOT NULL  ,
+    token_fcm                text ,
 	CONSTRAINT pk_sessions PRIMARY KEY ( idsession )
  );
 
