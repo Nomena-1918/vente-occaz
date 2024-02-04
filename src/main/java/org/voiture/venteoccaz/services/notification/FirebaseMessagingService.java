@@ -35,7 +35,6 @@ public class FirebaseMessagingService {
         MulticastMessage msg;
 
         if (listToken.isPresent()) {
-
             Notification notification =
                 new Notification()
                     .setTitre("Notification")

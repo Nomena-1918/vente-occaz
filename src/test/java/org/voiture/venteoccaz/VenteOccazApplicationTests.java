@@ -1,6 +1,7 @@
 package org.voiture.venteoccaz;
 
 import com.google.firebase.messaging.BatchResponse;
+import com.google.firebase.messaging.SendResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -247,19 +248,35 @@ class VenteOccazApplicationTests {
         assert u3 != null;
         assert u2 != null;
         var messagerie = messagerieService.getEchanges(u2, u3);
-        Message message = new Message(u2, u3, "Bonjour u3 c'est u2, tu devras recevoir la notif là", LocalDateTime.now());
+        Message message = new Message(u3, u2, "u2 pour u3, ceci est une notification. OUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", LocalDateTime.now());
         Messagerie m = null;
         if (messagerie.isPresent()) {
-            m = messagerieService.envoyerMessage(message, messagerie.get().getId());
+            //m = messagerieService.envoyerMessage(message, messagerie.get().getId());
             Optional<BatchResponse> b = firebaseMessagingService.sendNotifications(message);
+
+            if (b.isPresent()) {
+                var l = b.get().getResponses();
+
+                for (SendResponse s : l) {
+                    System.out.println("\n\n=====================\n");
+                    System.out.println("Message ID : "+s.getMessageId());
+                    if (s.getException()!=null)
+                        System.out.println("Exception : "+s.getException().getMessage());
+                    System.out.println("isSuccessful : "+ s.isSuccessful());
+                }
+            }
+            else
+                System.out.println("b empty");
         }
 
+/*
         messagerie = messagerieService.getEchanges(u2, u3);
         message = new Message(u3, u2, "Ouais bien reçu t'inquietes. Salut u2, comment ca va ?", LocalDateTime.now());
         if (messagerie.isPresent()) {
             m = messagerieService.envoyerMessage(message, messagerie.get().getId());
             Optional<BatchResponse> b = firebaseMessagingService.sendNotifications(message);
         }
+ */
 
     }
 
