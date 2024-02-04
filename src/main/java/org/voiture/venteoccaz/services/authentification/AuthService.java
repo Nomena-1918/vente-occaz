@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.voiture.venteoccaz.reponse.Reponse;
 import org.voiture.venteoccaz.repositories.SessionRepository;
 import org.voiture.venteoccaz.repositories.UtilisateurRepository;
-import org.voiture.venteoccaz.repositories.notification.UtilisateurFCMRepository;
 import org.voiture.venteoccaz.exception.AccessDeniedException;
 import org.voiture.venteoccaz.models.Session;
 import org.voiture.venteoccaz.models.Utilisateur;
@@ -52,7 +51,6 @@ public class AuthService {
     public Optional<Session> getSessionWithToken(String token) {
         return sessionRepository.findByToken(token.replace("Bearer ", ""));
     }
-
 
     public Boolean validateAuthorization(Map<String,String> headers) {
         String token = headers.get("authorization");
@@ -119,7 +117,7 @@ public class AuthService {
     }
 
     // v1
-    private Session setSessionActif(Session s, Utilisateur utilisateur, ) throws NoSuchAlgorithmException, InvalidKeyException {
+    private Session setSessionActif(Session s, Utilisateur utilisateur) throws NoSuchAlgorithmException, InvalidKeyException {
         s.setUtilisateur(utilisateur);
         s.setIsConnected(1);
         s.setDateHeureLogin(LocalDateTime.now());
