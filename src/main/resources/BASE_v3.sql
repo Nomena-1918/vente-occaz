@@ -116,7 +116,8 @@ CREATE  TABLE sessions (
 create table utilisateur_fcm(
     id serial primary key,
     id_utilisateur int not null references utilisateurs(idutilisateur),
-    token_fcm varchar(255) NOT NULL unique
+    token_fcm varchar(255) NOT NULL unique,
+    isconnected  int NOT NULL default 0
 );
 
 ALTER TABLE utilisateurs ADD CONSTRAINT unique_email_mdp unique(email);
