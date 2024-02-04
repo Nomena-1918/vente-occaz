@@ -261,7 +261,6 @@ class VenteOccazApplicationTests {
             Optional<BatchResponse> b = firebaseMessagingService.sendNotifications(message);
         }
 
-
     }
 
     @Test
