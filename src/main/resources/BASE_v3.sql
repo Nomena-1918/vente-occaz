@@ -114,7 +114,7 @@ CREATE  TABLE sessions (
 	CONSTRAINT pk_sessions PRIMARY KEY ( idsession )
 );
 alter table sessions add constraint unique_utilisateur_token_fcm unique (idutilisateur, token_fcm);
-alter table sessions add constraint unique_token unique (token_fcm);
+alter table sessions add constraint unique_token unique (token);
 alter table sessions add constraint unique_code unique (code);
 
 
