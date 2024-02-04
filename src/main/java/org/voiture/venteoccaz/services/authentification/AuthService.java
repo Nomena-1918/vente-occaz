@@ -107,7 +107,7 @@ public class AuthService {
 
         // Gestion session token FCM
         Session s = session.orElseGet(Session::new);
-        var sessionFinal  = sessionRepository.save(setSessionActifFcm(s, utilisateurFCM));
+        var sessionFinal = sessionRepository.save(setSessionActifFcm(s, utilisateurFCM));
 
         // Envoi notifications à tous les appareils de l'utilisateur (batch sendMessages)
         // entre dernière date connexion et maintenant : s et sessionFinal

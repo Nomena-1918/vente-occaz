@@ -54,6 +54,7 @@ public class AuthController {
         if (user.isEmpty()) {
             return new ResponseEntity<>(new Reponse("403", "Utilisateur absent de la base de donnée"), HttpStatus.FORBIDDEN);
         }
+        utilisateurFCM.setUtilisateur(user.get());
 
         return getReponseResponseEntity(utilisateurFCM);
     }
