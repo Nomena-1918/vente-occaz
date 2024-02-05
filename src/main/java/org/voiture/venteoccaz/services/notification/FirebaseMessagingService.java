@@ -42,9 +42,14 @@ public class FirebaseMessagingService {
                     .setMessageContent(tronquer(message.getTexte(), tailleMaxNotif))
                     .setDateHeureEnvoi(formaterDateTime(message.getDateHeureEnvoi()));
 
+            AndroidConfig androidConfig = AndroidConfig.builder()
+                    .setPriority(AndroidConfig.Priority.HIGH)
+                    .build();
+
             msg = MulticastMessage.builder()
                     .addAllTokens(listToken.get())
                     .putData("body", objectMapper.writeValueAsString(notification))
+                    .setAndroidConfig(androidConfig) // Set Android config with high priority
                     .build();
 
             return Optional.ofNullable(firebaseMessaging.sendMulticast(msg));

@@ -147,7 +147,7 @@ class VenteOccazApplicationTests {
         assert u3 != null;
         assert u2 != null;
         var messagerie = messagerieService.getEchanges(u2, u3);
-        Message message = new Message(u2, u3, "Bonjour u3 c'est u2", LocalDateTime.now());
+        Message message = new Message(u3, u2, "Bonjour u3 c'est u2", LocalDateTime.now());
         Messagerie m = null;
         if (messagerie.isPresent())
             m = messagerieService.envoyerMessage(message, messagerie.get().getId());
@@ -233,24 +233,24 @@ class VenteOccazApplicationTests {
     // u2 <-> u3
     @Test
     void envoyerMessageTestNotifs() throws Exception {
-        int id = 3;
+        int id = 2;
         MongoUtilisateur u2 = null;
         if (utilisateurRepository.findById(id).isPresent())
             u2  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
 
-        id = 4;
+        id = 3;
         MongoUtilisateur u3 = null;
         if (utilisateurRepository.findById(id).isPresent())
             u3  = mongoUtilisateurService.getUtilisateur(utilisateurRepository.findById(id).get());
 
-        var mess = messagerieService.ajouterContact(u2, u3);
+        //var mess = messagerieService.ajouterContact(u2, u3);
 
         assert u3 != null;
         assert u2 != null;
-        var messagerie = messagerieService.getEchanges(u2, u3);
-        Message message = new Message(u3, u2, "u2 pour u3, ceci est une notification. OUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII", LocalDateTime.now());
+        //var messagerie = messagerieService.getEchanges(u2, u3);
+        Message message = new Message(u3, u2, "Test hoe raha tena mandeha", LocalDateTime.now());
         Messagerie m = null;
-        if (messagerie.isPresent()) {
+        //if (messagerie.isPresent()) {
             //m = messagerieService.envoyerMessage(message, messagerie.get().getId());
             Optional<BatchResponse> b = firebaseMessagingService.sendNotifications(message);
 
@@ -267,7 +267,7 @@ class VenteOccazApplicationTests {
             }
             else
                 System.out.println("b empty");
-        }
+       // }
 
 /*
         messagerie = messagerieService.getEchanges(u2, u3);
