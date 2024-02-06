@@ -37,7 +37,6 @@ public class FirebaseMessagingService {
         if (listToken.isPresent()) {
             Notification notification =
                 new Notification()
-                    .setTitre("Notification")
                     .setNomUtilisateurEnvoyeur(message.getEnvoyeur().getEmail())
                     .setMessageContent(tronquer(message.getTexte(), tailleMaxNotif))
                     .setDateHeureEnvoi(formaterDateTime(message.getDateHeureEnvoi()));

@@ -248,7 +248,7 @@ class VenteOccazApplicationTests {
         assert u3 != null;
         assert u2 != null;
         //var messagerie = messagerieService.getEchanges(u2, u3);
-        Message message = new Message(u3, u2, "Test hoe raha tena mandeha", LocalDateTime.now());
+        Message message = new Message(u2, u3, "Marary Nomena", LocalDateTime.now());
         Messagerie m = null;
         //if (messagerie.isPresent()) {
             //m = messagerieService.envoyerMessage(message, messagerie.get().getId());
@@ -258,11 +258,11 @@ class VenteOccazApplicationTests {
                 var l = b.get().getResponses();
 
                 for (SendResponse s : l) {
-                    System.out.println("\n\n=====================\n");
+                    System.out.println("\n\n=====================");
                     System.out.println("Message ID : "+s.getMessageId());
                     if (s.getException()!=null)
                         System.out.println("Exception : "+s.getException().getMessage());
-                    System.out.println("isSuccessful : "+ s.isSuccessful());
+                    System.out.println("isSuccessful : "+ s.isSuccessful()+"\n\n");
                 }
             }
             else
