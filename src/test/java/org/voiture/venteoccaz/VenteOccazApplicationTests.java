@@ -258,11 +258,17 @@ class VenteOccazApplicationTests {
                 var l = b.get().getResponses();
 
                 for (SendResponse s : l) {
+                    System.out.println("""
+                            
+                            ** LOGS NOTIFICATIONS **
+                            
+                            """);
                     System.out.println("\n\n=====================");
                     System.out.println("Message ID : "+s.getMessageId());
                     if (s.getException()!=null)
                         System.out.println("Exception : "+s.getException().getMessage());
-                    System.out.println("isSuccessful : "+ s.isSuccessful()+"\n\n");
+                    System.out.println("isSuccessful : "+ s.isSuccessful());
+                    System.out.println("=====================\n\n");
                 }
             }
             else
