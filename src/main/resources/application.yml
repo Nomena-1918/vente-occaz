@@ -13,15 +13,11 @@ logging:
 spring:
   data:
     mongodb:
-      #uri: mongodb://nomena:root@localhost:27017/admin
       uri: mongodb://mongo:3CBDBbAE3HH-a1FaDd1GBB5Gh-dHD5hd@viaduct.proxy.rlwy.net:59865/admin
   datasource:
     url: jdbc:postgresql://viaduct.proxy.rlwy.net:55313/railway
-    #url: jdbc:postgresql://localhost:5432/voiture
     username: postgres
-    #username: nomena
     password: ag2CBEegb6fBe1GdgAd6cbbDdF5cgac1
-    #password: root
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
