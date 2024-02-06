@@ -13,11 +13,11 @@ logging:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo:3CBDBbAE3HH-a1FaDd1GBB5Gh-dHD5hd@viaduct.proxy.rlwy.net:59865/admin
+      uri: mongodb://mongo:d6cHF4a-5ah1fffeG-E62fCacG6b1ff1@monorail.proxy.rlwy.net:19349/admin
   datasource:
-    url: jdbc:postgresql://viaduct.proxy.rlwy.net:55313/railway
+    url: jdbc:postgresql://monorail.proxy.rlwy.net:51143/railway
     username: postgres
-    password: ag2CBEegb6fBe1GdgAd6cbbDdF5cgac1
+    password: -5dBC-e4BEdebabcEeD5DAB45GDG5e4b
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
