@@ -6,7 +6,7 @@ import com.google.firebase.messaging.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.voiture.venteoccaz.models.firebase.Notification;
+import org.voiture.venteoccaz.models.firebase.CustomNotification;
 import org.voiture.venteoccaz.models.mongodb.Message;
 import org.voiture.venteoccaz.repositories.SessionRepository;
 
@@ -35,8 +35,8 @@ public class FirebaseMessagingService {
         MulticastMessage msg;
 
         if (listToken.isPresent()) {
-            Notification notification =
-                new Notification()
+            CustomNotification customNotification =
+                new CustomNotification()
                     .setNomUtilisateurEnvoyeur(message.getEnvoyeur().getEmail())
                     .setMessageContent(tronquer(message.getTexte(), tailleMaxNotif))
                     .setDateHeureEnvoi(formaterDateTime(message.getDateHeureEnvoi()));
@@ -47,10 +47,13 @@ public class FirebaseMessagingService {
 
             msg = MulticastMessage.builder()
                     .addAllTokens(listToken.get())
-                    .putData("body", objectMapper.writeValueAsString(notification))
-                    .setAndroidConfig(androidConfig) // Set Android config with high priority
+                    .setNotification(Notification.builder() // Use setNotification for notification payload
+                            .setTitle("Nouveau message") // Add title
+                            .setBody(customNotification.getMessageContent())
+                            .build())
+                    .putData("data", objectMapper.writeValueAsString(customNotification)) // Keep detailed data for later use
+                    .setAndroidConfig(androidConfig)
                     .build();
-
             return Optional.ofNullable(firebaseMessaging.sendMulticast(msg));
         }
         else
