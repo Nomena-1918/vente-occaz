@@ -47,10 +47,6 @@ public class FirebaseMessagingService {
 
             msg = MulticastMessage.builder()
                     .addAllTokens(listToken.get())
-                    .setNotification(Notification.builder() // Use setNotification for notification payload
-                            .setTitle("Nouveau message") // Add title
-                            .setBody(customNotification.getMessageContent())
-                            .build())
                     .putData("data", objectMapper.writeValueAsString(customNotification)) // Keep detailed data for later use
                     .setAndroidConfig(androidConfig)
                     .build();
