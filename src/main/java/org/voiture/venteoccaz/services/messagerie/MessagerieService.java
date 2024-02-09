@@ -87,7 +87,7 @@ public class MessagerieService {
                 throw new Exception("Acteurs de la messagerie et du message différents");
 
             message.setMessagerie(messagerie);
-
+            
             // Save the message to generate an ID
             Message savedMessage = messageRepository.save(message);
 
@@ -120,7 +120,7 @@ public class MessagerieService {
                             """);
                 System.out.println("\n\n=====================");
                 System.out.println("Message ID : "+s.getMessageId());
-                System.out.println("Message    : "+message.getTexte());
+                System.out.println("message "+message);
                 if (s.getException()!=null)
                     System.out.println("Exception : "+s.getException().getMessage());
                 System.out.println("isSuccessful : "+ s.isSuccessful());

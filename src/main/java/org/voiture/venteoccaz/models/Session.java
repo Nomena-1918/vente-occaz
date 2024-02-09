@@ -27,16 +27,18 @@ public class Session {
     @JoinColumn(name = "idutilisateur", nullable = false)
     Utilisateur utilisateur;
     
-    @Column(name = "dateheurelogin")
+    @Column(name = "dateheurelogin", nullable = false)
     LocalDateTime dateHeureLogin;
+
+    @Column(name = "code", nullable = false)
     String code;
     
-    @Column(name = "isconnected")
+    @Column(name = "isconnected", nullable = false)
     Integer isConnected;
 
-    @Column(name = "token")
+    @Column(name = "token", nullable = false)
     String token;
 
-    @Column(name = "token_fcm")
+    @Column(name = "token_fcm", nullable = false)
     String tokenFcm;
 }
