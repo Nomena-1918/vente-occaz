@@ -87,7 +87,7 @@ public class MessagerieService {
                 throw new Exception("Acteurs de la messagerie et du message différents");
 
             message.setMessagerie(messagerie);
-
+            
             // Save the message to generate an ID
             Message savedMessage = messageRepository.save(message);
 
