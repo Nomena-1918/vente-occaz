@@ -6,7 +6,6 @@ import com.google.firebase.messaging.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.voiture.venteoccaz.models.firebase.CustomNotification;
 import org.voiture.venteoccaz.models.mongodb.Message;
 import org.voiture.venteoccaz.repositories.SessionRepository;
 
@@ -35,21 +34,21 @@ public class FirebaseMessagingService {
         MulticastMessage msg;
 
         if (listToken.isPresent()) {
-            CustomNotification customNotification =
-                new CustomNotification()
-                    .setNomUtilisateurEnvoyeur(message.getEnvoyeur().getEmail())
-                    .setMessageContent(tronquer(message.getTexte(), tailleMaxNotif))
-                    .setDateHeureEnvoi(formaterDateTime(message.getDateHeureEnvoi()));
-
             AndroidConfig androidConfig = AndroidConfig.builder()
                     .setPriority(AndroidConfig.Priority.HIGH)
                     .build();
 
+            Notification notification = Notification.builder()
+                    .setTitle(message.getEnvoyeur().getEmail())
+                    .setBody(tronquer(message.getTexte(), tailleMaxNotif)+" à "+formaterDateTime(message.getDateHeureEnvoi()))
+                    .build();
+
             msg = MulticastMessage.builder()
                     .addAllTokens(listToken.get())
-                    .putData("data", objectMapper.writeValueAsString(customNotification)) // Keep detailed data for later use
+                    .setNotification(notification)
                     .setAndroidConfig(androidConfig)
                     .build();
+
             return Optional.ofNullable(firebaseMessaging.sendMulticast(msg));
         }
         else
