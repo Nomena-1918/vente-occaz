@@ -120,6 +120,7 @@ public class MessagerieService {
                             """);
                 System.out.println("\n\n=====================");
                 System.out.println("Message ID : "+s.getMessageId());
+                System.out.println("message "+message);
                 if (s.getException()!=null)
                     System.out.println("Exception : "+s.getException().getMessage());
                 System.out.println("isSuccessful : "+ s.isSuccessful());
