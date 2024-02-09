@@ -4,17 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class CustomNotification {
-    String titre;
     String nomUtilisateurEnvoyeur;
     String messageContent;
     String dateHeureEnvoi;
 
     public CustomNotification() {
-    }
-
-    public CustomNotification setTitre(String titre) {
-        this.titre = titre;
-        return this;
     }
 
     public CustomNotification setNomUtilisateurEnvoyeur(String nomUtilisateurEnvoyeur) {
