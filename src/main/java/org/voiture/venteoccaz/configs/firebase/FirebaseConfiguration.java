@@ -13,7 +13,6 @@ import java.io.InputStream;
 @Configuration
 @EnableConfigurationProperties(FirebaseProperties.class)
 public class FirebaseConfiguration {
-
     private final FirebaseProperties firebaseProperties;
 
     public FirebaseConfiguration(FirebaseProperties firebaseProperties) {
