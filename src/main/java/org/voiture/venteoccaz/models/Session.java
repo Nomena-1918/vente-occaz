@@ -39,6 +39,6 @@ public class Session {
     @Column(name = "token", nullable = false)
     String token;
 
-    @Column(name = "token_fcm", nullable = false)
+    @Column(name = "token_fcm")
     String tokenFcm;
 }
