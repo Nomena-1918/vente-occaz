@@ -1,6 +1,7 @@
 package org.voiture.venteoccaz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.voiture.venteoccaz.reponse.Reponse;
@@ -77,4 +78,31 @@ public class GestionCritereController {
     public ResponseEntity<Reponse> readMarque(@RequestHeader Map<String,String> headers) {
         return authService.secure(headers, marqueRepository.findAll());
     }
+
+
+    // READ NO-AUTH
+    @GetMapping("/no-auth/categories")
+    public ResponseEntity<Reponse> readCategorieNoAuth() {
+        return ResponseEntity.ok(new Reponse(categorieRepository.findAll()));
+    }
+    @GetMapping("/no-auth/modeles")
+    public ResponseEntity<Reponse> readModeleNoAuth() {
+        return ResponseEntity.ok(new Reponse(modeleRepository.findAll()));
+    }
+    @GetMapping("/no-auth/type-occasions")
+    public ResponseEntity<Reponse> readTypeOccasionNoAuth() {
+        return ResponseEntity.ok(new Reponse(typeOccasionRepository.findAll()));
+    }
+
+    @GetMapping("/no-auth/couleurs")
+    public ResponseEntity<Reponse> readCouleurNoAuth() {
+        return ResponseEntity.ok(new Reponse(couleurRepository.findAll()));
+    }
+
+    @GetMapping("/no-auth/marques")
+    public ResponseEntity<Reponse> readMarqueNoAuth() {
+        return ResponseEntity.ok(new Reponse(marqueRepository.findAll()));
+    }
+
+
 }
