@@ -13,7 +13,7 @@ logging:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo:2ahgH-eHA-Cb35C5151afGfFbAcg61E4@viaduct.proxy.rlwy.net:15651/admin
+      uri: mongodb://mongo:43c5Cdab5-AH4CgDhcFG6gE4gbdBDGH1@viaduct.proxy.rlwy.net:11711/admin
   datasource:
     url: jdbc:postgresql://monorail.proxy.rlwy.net:51143/railway
     username: postgres
